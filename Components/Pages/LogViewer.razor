@@ -1,0 +1,12 @@
+﻿@page "/admin/logviewer"
+@using Microsoft.AspNetCore.Components.Sections
+@using PageLogic
+@inherits LogViewerBase
+
+<PageTitle>Log Viewer</PageTitle>
+
+<h1>Log Viewer</h1>
+<hr />
+<button type = "button" class = "btn btn-success" @onclick = "Reload">Reload Page</button>
+<hr />
+<samp>@((MarkupString)log)</samp>

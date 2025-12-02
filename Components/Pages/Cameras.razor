@@ -1,0 +1,37 @@
+﻿@page "/admin/cameras"
+@using PageLogic
+@inherits CamerasBase
+
+<PageTitle>Cameras</PageTitle>
+
+<h1>Cameras</h1>
+<hr />
+@foreach (CameraObject camera in cameras)
+{
+    <div class = "card">
+        <div class = "card-header">
+            <h4 class = "card-title">@camera.title</h4>
+        </div>
+        <div class = "card-body">
+            <form>
+                <div class="mb-3">
+                    <label for = "title" class = "form-label fw-bold">Camera Name:</label>
+                    <input type = "text" class = "form-control form-control-text" id = "title" @bind = "camera.title" aria-describedby = "titleDescription">
+                    <div id = "titleDescription" class = "form-text">Name of this camera.</div>
+                </div>
+                <div class="mb-3">
+                    <label for = "url" class = "form-label fw-bold">URL:</label>
+                    <input type = "text" class = "form-control form-control-text" id = "url" @bind = "camera.url" aria-describedby = "urlDescription">
+                    <div id = "urlDescription" class = "form-text">URL where you can view this webcam. This must be accessible from all your clients.</div>
+                </div>
+            </form>
+            <button type = "button" class = "btn btn-danger" @onclick = "@(e => DeleteCamera (@camera.title, @camera.url))">Delete</button>
+            <hr />
+            <h5>Preview</h5>
+            <img src = "@camera.url" alt = "Camera Preview" class = "img-fluid" width = "320" height = "240" onerror = "this.src = '/img/no_camera.png'"/>
+        </div>
+    </div>
+    <br />
+}
+<button type = "button" class = "btn btn-primary" @onclick = "AddNewCamera">Add New Camera</button>
+<button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>

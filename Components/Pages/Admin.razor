@@ -1,0 +1,71 @@
+﻿@page "/admin"
+@using PageLogic
+@inherits AdminBase
+
+<PageTitle>Home</PageTitle>
+
+<h1>Home</h1>
+<hr />
+<div class = "card-group">
+    <div class = "card">
+        <div class = "card-header">
+            <h4 class = "card-title">Printers</h4>
+        </div>
+        <div class = "card-body">
+
+            @foreach (PrinterObject printer in printers)
+            {
+                <h5>@printer.name
+                    <svg width = "30" height = "30" xmlns = "http://www.w3.org/2000/svg">
+                        <circle cx = "15" cy = "15" r = "10" stroke = "black" stroke-width = "2" fill = "@printer.background" />
+                    </svg>
+                </h5>
+                <form>
+                    <div class="mb-3">
+                        <label for = "filament" class = "form-label fw-bold">Filament Colour:</label>
+                        <input type = "color" class = "form-control form-control-color" id = "filament" @bind = "@printer.filament" aria-describedby = "filamentDescription">
+                        <div id = "filamentDescription" class = "form-text">The colour of the filament.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for = "transparency" class = "form-label fw-bold">Transparent?</label>
+                        <input type = "checkbox" class = "form-control form-check-input" @bind = "@transparencies[printer.id]" id = "transparency" aria-describedby = "transparencyDescription">
+                        <div id = "transparencyDescription" class = "form-text">Is the filament transparent?</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for = "locked" class = "form-label fw-bold">Locked?</label>
+                        <input type = "checkbox" class = "form-control form-check-input" id = "locked" @bind = "printer.locked" aria-describedby = "lockedDescription">
+                        <div id = "lockedDescription" class = "form-text">Printers can be locked to stop users sending jobs to them via 3D Print Console. This does not affect OctoPrint or the actual printer itself.</div>
+                    </div>
+                </form>
+                <button type = "button" class = "btn btn-primary" @onclick = '() => nav.NavigateTo ("/admin/printers#" + printer.id, true)'>Go to Printer</button>
+                <hr />
+            }
+
+            <button type = "button" class = "btn btn-success" @onclick = "SavePrinters">Save</button>
+        </div>
+    </div>
+    <div class = "card">
+        <div class = "card-header">
+            <h4 class = "card-title">Recent Log Entries</h4>
+        </div>
+        <div class = "card-body">
+            <samp>@((MarkupString)log)</samp>
+            <br />
+            <button type = "button" class = "btn btn-primary" @onclick = '() => nav.NavigateTo ("/admin/logviewer", true)'>See Full Log</button>
+        </div>
+    </div>
+</div>
+<br/>
+<div class = "card">
+    <div class = "card-header">
+        <h4 class = "card-title">Cameras</h4>
+    </div>
+    <div class = "card-body text-center">
+
+        @foreach (CameraObject camera in cameras)
+        {
+            <img src = "@camera.url" alt = "Camera Preview" class = "img-fluid mx-4 my-3" width = "320" height = "240" onerror = "this.src = '/img/no_camera.png'"/>
+        }
+
+    </div>
+</div>

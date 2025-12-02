@@ -1,0 +1,47 @@
+@page "/login"
+@using PageLogic
+@using _3d_print_console_dotnet.Components.Layout
+@layout LoginLayout
+@inherits LoginBase
+
+<PageTitle>Log In</PageTitle>
+
+<h1>Log In to 3D Print Console .NET</h1>
+<br />
+<form>
+    <div class="mb-3">
+        <label for = "password" class = "form-label fw-bold">Admin Password:</label>
+        <input type = "password" class = "form-control form-control-password" id = "password" @bind = "@userPassword" aria-describedby = "passwordDescription">
+        <div id = "passwordDescription" class = "form-text">You need to enter the admin password to edit settings.</div>
+        <p class = "text-danger fw-bold">@((MarkupString)message)</p>
+    </div>
+    <button type = "button" class = "btn btn-primary" @onclick = "CheckPassword">Log In</button>
+</form>
+
+<script type = "text/javascript">
+
+    function SetCookie (uid, expiry)
+    {
+        document.cookie = `access_token=${uid}; expires=${expiry}`;
+        window.location.replace ("/admin");
+    }
+
+    function GetCookie ()
+    {
+        if (document.cookie.length == 0)
+        {
+            return "";
+        }
+
+        var allCookies = document.cookie.split (";");
+
+        for (var i = 0; i < allCookies.length; i++)
+        {
+            if (allCookies [i].startsWith ("access_token="))
+            {
+                return allCookies [i].slice (13);
+            }
+        }
+    }
+
+</script>

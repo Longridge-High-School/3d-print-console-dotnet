@@ -1,0 +1,41 @@
+﻿@page "/admin/config"
+@using PageLogic
+@inherits ConfigBase
+
+<PageTitle>Config</PageTitle>
+
+<h1>Config</h1>
+<hr />
+<form>
+    <div class="mb-3">
+        <label for = "brandColour" class = "form-label fw-bold">Brand Colour:</label>
+        <input type = "color" class = "form-control form-control-color" id = "brandColour" @bind = "@currentConfig.brandColour" aria-describedby = "brandColourDescription">
+        <div id = "brandColourDescription" class = "form-text">This is the colour used for the header and footer background, as well as button highlights and the loading spinner.</div>
+    </div>
+    <div class="mb-3">
+        <label for = "smallScreenLiveColour" class = "form-label fw-bold">Small Screen Live Colour:</label>
+        <input type = "color" class = "form-control form-control-color" id = "smallScreenLiveColour" @bind = "@smallScreenLiveColourNoAlpha" aria-describedby = "smallScreenLiveColourDescription">
+        <div id = "smallScreenLiveColourDescription" class = "form-text">This is the colour used for the fade effect applied when you open the Cameras and Widgets panel on a small display.</div>
+    </div>
+    <div class="mb-3">
+        <label for = "transparency" class = "form-label fw-bold">Small Screen Live Panel Opacity:</label>
+        <input type = "range" class = "form-control form-control-range" min = "0" max = "255" id = "transparency" @bind = "@transparency" aria-describedby = "transparencyDescription">
+        <div id = "transparencyDescription" class = "form-text">This is the opacity used for the fade effect applied when you open the Cameras and Widgets panel on a small display.</div>
+    </div>
+    <div class="mb-3">
+        <label for = "headerFooterTextColour" class = "form-label fw-bold">Header & Footer Text Colour:</label>
+        <input type = "color" class = "form-control form-control-color" id = "headerFooterTextColour" @bind = "@currentConfig.headerFooterTextColour" aria-describedby = "headerFooterTextColourDescription">
+        <div id = "headerFooterTextColourDescription" class = "form-text">This is the colour used for the text in the header and footer. It does not apply to the main content.</div>
+    </div>
+    <div class="mb-3">
+        <label for = "logServer" class = "form-label fw-bold">Log Server URL:</label>
+        <input type = "url" class = "form-control form-control-url" id = "logServer" @bind = "@currentConfig.logServer" aria-describedby = "logServerDescription">
+        <div id = "logServerDescription" class = "form-text">URL of the logging server. This must be accessible from all your clients.</div>
+    </div>
+    <div class="mb-3">
+        <label for = "maxFileNameLength" class = "form-label fw-bold">Maximum File Name Length:</label>
+        <input type = "number" class = "form-control form-control-number" @bind = "@currentConfig.maxFileNameLength" id = "maxFileNameLength" aria-describedby = "maxFileNameLength">
+        <div id = "maxFileNameLength" class = "form-text">How long file names should be before they truncate.</div>
+    </div>
+    <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
+</form>

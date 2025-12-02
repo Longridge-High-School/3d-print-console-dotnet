@@ -1,0 +1,45 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main class = "pb-2">
+        <div class="top-row px-4">
+            <a href="https://github.com/Longridge-High-School/3d-print-console/blob/main/README.md" target="_blank">Help</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<script type = "text/JavaScript">
+
+    function GetCookie ()
+    {
+        if (document.cookie.length == 0)
+        {
+            return "";
+        }
+
+        var allCookies = document.cookie.split (";");
+
+        for (var i = 0; i < allCookies.length; i++)
+        {
+            if (allCookies [i].startsWith ("access_token="))
+            {
+                return allCookies [i].slice (13);
+            }
+        }
+    }
+
+</script>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
