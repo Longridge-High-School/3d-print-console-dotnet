@@ -14,7 +14,7 @@ public static class EnvVars
         }
         else
         {
-            Console.WriteLine ("⚠️ LOG_PATH not set!");
+            Console.WriteLine ("[!] LOG_PATH not set!");
         }
 
         string? password = Environment.GetEnvironmentVariable ("ADMIN_PASSWORD");
@@ -25,7 +25,7 @@ public static class EnvVars
         }
         else
         {
-            Console.WriteLine ("⚠️ ADMIN_PASSWORD not set! Using \"admin\", which is insecure.");
+            Console.WriteLine ("[!] ADMIN_PASSWORD not set! Using \"admin\", which is insecure.");
         }
 
         string? redisPort = Environment.GetEnvironmentVariable ("REDIS_PORT");
@@ -38,7 +38,7 @@ public static class EnvVars
             }
             catch
             {
-                Console.WriteLine ("⚠️ REDIS_PORT is set, but isn't a number!");
+                Console.WriteLine ("[!] REDIS_PORT is set, but isn't a number!");
             }
         }
     }

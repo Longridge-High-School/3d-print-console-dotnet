@@ -1,0 +1,28 @@
+@page "/log"
+@using _3d_print_console_dotnet.Components.Layout
+@layout ConsoleLayout
+
+@inject IHttpContextAccessor http;
+
+<PageTitle>3D Print Console .NET Log Recorder</PageTitle>
+
+@code
+{
+    [SupplyParameterFromQuery(Name = "message")]
+    public string? message {get; set;}
+
+    protected override void OnInitialized ()
+    {
+        if (message != null)
+        {
+            message = DateTime.UtcNow.ToString () + " - " + http.HttpContext.Connection.RemoteIpAddress + " - " + message;
+            File.AppendAllText (EnvVars.logPath, "\n" + message);
+        }
+    }
+}
+
+<div style = "padding: 1em;">
+    <img src = "ascii.svg" alt = "3D Print Console Logo"/>
+    <br/>
+    <b>3D Print Console Logging is running!</b>
+</div>
