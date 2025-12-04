@@ -3,7 +3,7 @@ using _3d_print_console_dotnet.Components;
 Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
 Console.WriteLine ("************************\n");
-Console.WriteLine ("Version: v0.1.0 using 3D Print Console v2.1.0");
+Console.WriteLine ("Version: v0.1.0 using 3D Print Console v2.2.0");
 Console.WriteLine ("Copyright (C) Longridge High School 2025");
 Console.WriteLine ("Licensed under the whatever license.\n");
 

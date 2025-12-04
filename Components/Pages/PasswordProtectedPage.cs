@@ -5,7 +5,7 @@ namespace PageLogic
 {
     public class PasswordProtectedPage : ComponentBase
     {
-        [Inject] private IJSRuntime javascript {get; set;}
+        [Inject] public IJSRuntime javascript {get; set;}
         [Inject] public NavigationManager nav {get; set;}
         
         public async Task CheckAuthCookie ()

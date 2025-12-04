@@ -1,7 +1,65 @@
 ﻿@page "/admin/widgets"
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Sections
+@using PageLogic
+@inherits WidgetsBase
 
 <PageTitle>Widgets</PageTitle>
 
 <h1>Widgets</h1>
 <hr />
-<b>This section of 3D Print Console .NET hasn't been finished yet!</b>
+<h3>Installed Widgets</h3>
+<samp>📂 /data/widgets</samp>
+<div class = "ml-5">
+    <ul style = "list-style-type: none;">
+        @foreach (string directory in directories)
+        {
+            <li class = "mt-1">
+                <samp>📁 @Path.GetRelativePath(@widgetDirectory, @directory).Replace('\\', '/')</samp>&nbsp;&nbsp;
+                <button type = "button" class = "btn btn-outline-danger btn-sm" @onclick = "@(e => DeleteDirectory (@directory))">❌</button>
+            </li>
+        }
+    </ul>
+</div>
+<label for = "UploadZip" class = "btn btn-primary">Upload Widget as .ZIP</label>
+<InputFile id = "UploadZip" hidden OnChange="@UploadAndExtract" accept=".zip" />
+<hr />
+<h3>Widget Instances</h3>
+<div>
+    @foreach (WidgetObject widget in widgets)
+    {
+        <div class = "card">
+            <div class = "card-header">
+                <h4 class = "card-title">@widget.title</h4>
+            </div>
+            <div class = "card-body">
+                <form>
+                    <div class="mb-3">
+                        <label for = "title" class = "form-label fw-bold">Widget Title:</label>
+                        <input type = "text" class = "form-control form-control-text" id = "title" @bind = "widget.title" aria-describedby = "titleDescription">
+                        <div id = "titleDescription" class = "form-text">Title of this widget instance.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for = "url" class = "form-label fw-bold">Widget HTML File:</label>
+                        <input type = "text" class = "form-control form-control-text" id = "url" @bind = "widget.url" aria-describedby = "urlDescription">
+                        <div id = "urlDescription" class = "form-text">HTML file this widget uses (relative to <samp>/data/widgets</samp>).</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for = "args" class = "form-label fw-bold">Arguments:</label>
+                        <input type = "text" class = "form-control form-control-text" id = "args" @bind = "widget.args" aria-describedby = "argsDescription">
+                        <div id = "argsDescription" class = "form-text">Data passed to the widget in the URL.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for = "enabled" class = "form-label fw-bold">Enabled?</label>
+                        <input type = "checkbox" class = "form-control form-check-input" id = "enabled" @bind = "widget.enabled" aria-describedby = "enabledDescription">
+                        <div id = "enabledDescription" class = "form-text">Is this widget visible on the console page?</div>
+                    </div>
+                    <button type = "button" class = "btn btn-danger" @onclick = "@(e => DeleteWidget (@widget.title, @widget.url))">Delete</button>
+                </form>
+            </div>
+        </div>
+        <br/>
+    }
+    <button type = "button" class = "btn btn-primary" @onclick="AddNewWidget">Add New Widget</button>
+    <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
+</div>
