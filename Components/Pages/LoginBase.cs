@@ -18,18 +18,20 @@ namespace PageLogic
 
         public void CheckPassword ()
         {
-            if (userPassword == EnvVars.password)
+            if (userPassword == Globals.password)
             {
                 string token = Guid.NewGuid ().ToString ();
                 TimeSpan sixHours = new TimeSpan (6, 0, 0);
                 string expiry = DateTime.Now.Add (sixHours).ToString ("ddd, dd MMM yyy HH:mm:ss UTC");
                 javascript.InvokeVoidAsync ("SetCookie", token, expiry);
+                ServerOutput.WriteLine ("Succesful login!");
                 Cache.Set (token, expiry);
             }
             else
             {
                 userPassword = "";
                 message = "Incorrect Password!";
+                ServerOutput.WriteLine ("Login failed!");
             }
         }
 

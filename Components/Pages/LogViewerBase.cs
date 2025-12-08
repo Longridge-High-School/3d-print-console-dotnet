@@ -6,7 +6,7 @@ namespace PageLogic
 
         public LogViewerBase ()
         {
-            string[] content = File.ReadAllLines (EnvVars.logPath);
+            string[] content = File.ReadAllLines (Globals.logPath);
 
             for (int i = content.Length - 1; i >= 0; i--)
             {

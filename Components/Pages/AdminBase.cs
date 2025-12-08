@@ -48,7 +48,7 @@ namespace PageLogic
 
             cameras = JsonSerializer.Deserialize<List<CameraObject>> (File.ReadAllText (cameraFilePath));
 
-            string[] content = File.ReadAllLines (EnvVars.logPath);
+            string[] content = File.ReadAllLines (Globals.logPath);
 
             if (content.Length > 16)
             {
@@ -79,6 +79,7 @@ namespace PageLogic
             }
 
             Console.WriteLine ("Updated printers.json to " + JsonSerializer.Serialize (printers));
+            ServerOutput.WriteLine ("Updated printers.json.", false);
             File.WriteAllText (printerFilePath, JsonSerializer.Serialize (printers));
             nav.NavigateTo (nav.Uri, true); // Reload page.
         }

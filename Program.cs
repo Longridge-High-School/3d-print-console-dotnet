@@ -3,11 +3,23 @@ using _3d_print_console_dotnet.Components;
 Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
 Console.WriteLine ("************************\n");
-Console.WriteLine ("Version: v0.1.0 using 3D Print Console v2.2.0");
+Console.WriteLine ("Version: v0.1.0");
 Console.WriteLine ("Copyright (C) Longridge High School 2025");
-Console.WriteLine ("Licensed under the whatever license.\n");
+Console.WriteLine ("Licensed under the M.I.T license.\n");
 
-EnvVars.Load ();
+ServerOutput.WriteLine ("Starting 3D Print Console .NET...", false);
+
+if (File.Exists ("3d-print-console.cfg"))
+{
+    ServerOutput.WriteLine ("Loading settings from 3d-print-console.cfg...");
+    Globals.LoadFromFile ();
+}
+else
+{
+    ServerOutput.WriteLine ("Loading settings from environment variables...");
+    Globals.LoadFromEnvironment ();
+}
+
 Cache.Connect ();
 
 var builder = WebApplication.CreateBuilder(args);

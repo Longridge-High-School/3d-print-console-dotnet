@@ -16,7 +16,7 @@
         if (message != null)
         {
             message = DateTime.UtcNow.ToString () + " - " + http.HttpContext.Connection.RemoteIpAddress + " - " + message;
-            File.AppendAllText (EnvVars.logPath, "\n" + message);
+            File.AppendAllText (Globals.logPath, "\n" + message);
         }
     }
 }

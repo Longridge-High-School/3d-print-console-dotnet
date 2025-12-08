@@ -49,6 +49,7 @@ namespace PageLogic
         public void Save ()
         {
             Console.WriteLine ("Updated widgets.json to " + JsonSerializer.Serialize (widgets));
+            ServerOutput.WriteLine ("Updated widgets.json.", false);
             File.WriteAllText (filePath, JsonSerializer.Serialize (widgets));
             nav.NavigateTo (nav.Uri, true); // Reload page.
         }
@@ -82,20 +83,20 @@ namespace PageLogic
         {
             try
             {
-                Console.WriteLine ("Uploading " + input.File.Name + " as widget...");
+                ServerOutput.WriteLine ("Uploading " + input.File.Name + " as widget...");
                 FileStream archive = new FileStream (Path.GetTempPath () + input.File.Name, FileMode.Create, FileAccess.Write);
                 await input.File.OpenReadStream ().CopyToAsync (archive);
                 archive.Close ();
 
-                Console.WriteLine ("Extracting archive...");
+                ServerOutput.WriteLine ("Extracting archive...");
                 ZipFile.ExtractToDirectory (Path.GetTempPath () + input.File.Name, Path.Combine (widgetDirectory, input.File.Name.Substring (0, input.File.Name.Length - 4)));
 
                 File.Delete (Path.GetTempPath () + input.File.Name);
-                Console.WriteLine ("Install Succesful!");
+                ServerOutput.WriteLine ("Install Succesful!");
             }
             catch (Exception error)
             {
-                Console.WriteLine ("Widget upload failed!");
+                ServerOutput.WriteLine ("Widget upload failed!");
                 Console.WriteLine (error.ToString ());
                 try
                 {
@@ -114,16 +115,16 @@ namespace PageLogic
         {
             try
             {
-                Console.WriteLine ("Removing directory " + path + "...");
+                ServerOutput.WriteLine ("Removing directory " + path + "...");
                 Directory.Delete (path, true);
-                Console.WriteLine ("Directory succesfully removed!");
+                ServerOutput.WriteLine ("Directory succesfully removed!");
                 nav.NavigateTo (nav.Uri, true);
             }
             catch (Exception error)
             {
                 try
                 {
-                    Console.WriteLine ("Deleting directory failed!");
+                    ServerOutput.WriteLine ("Deleting directory failed!");
                     Console.WriteLine (error.ToString ());
                     await javascript.InvokeAsync<string>("alert", ["⚠️ Failed to remove widget files."]);
                 }

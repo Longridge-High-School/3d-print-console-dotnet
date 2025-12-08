@@ -60,6 +60,7 @@ namespace PageLogic
             }
 
             Console.WriteLine ("Updated printers.json to " + JsonSerializer.Serialize (printers));
+            ServerOutput.WriteLine ("Updated printers.json.", false);
             File.WriteAllText (filePath, JsonSerializer.Serialize (printers));
             nav.NavigateTo (nav.Uri, true); // Reload page.
         }

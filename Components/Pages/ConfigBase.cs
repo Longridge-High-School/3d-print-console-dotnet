@@ -27,6 +27,7 @@ namespace PageLogic
         {
             currentConfig.smallScreenLiveColour = smallScreenLiveColourNoAlpha + transparency.ToString ("X");
             Console.WriteLine ("Updated config.json to " + JsonSerializer.Serialize (currentConfig));
+            ServerOutput.WriteLine ("Updated config.json.", false);
             File.WriteAllText (filePath, JsonSerializer.Serialize (currentConfig));
         }
     }

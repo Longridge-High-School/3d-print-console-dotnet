@@ -23,6 +23,7 @@ namespace PageLogic
         public void Save ()
         {
             Console.WriteLine ("Updated cameras.json to " + JsonSerializer.Serialize (cameras));
+            ServerOutput.WriteLine ("Updated cameras.json.", false);
             File.WriteAllText (filePath, JsonSerializer.Serialize (cameras));
         }
 
