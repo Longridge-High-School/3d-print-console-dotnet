@@ -1,0 +1,13 @@
+[Unit]
+Description=3D Print Console .NET
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=YOUR_USER_HERE
+ExecStart=dotnet /srv/3d-print-console-dotnet/3d-print-console-dotnet.dll
+
+[Install]
+WantedBy=multi-user.target
