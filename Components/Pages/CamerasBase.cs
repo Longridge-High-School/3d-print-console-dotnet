@@ -15,7 +15,15 @@ namespace PageLogic
                 filePath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "wwwroot", "data", "cameras.json");   
             #endif
 
-            cameras = JsonSerializer.Deserialize<List<CameraObject>> (File.ReadAllText (filePath));
+            try
+            {
+                cameras = JsonSerializer.Deserialize<List<CameraObject>> (File.ReadAllText (filePath));
+            }
+            catch
+            {
+                cameras = new List<CameraObject> ();
+                ServerOutput.WriteLine ("[!] /data/cameras.json not found!");
+            }
 
             Task.Run (CheckAuthCookie);
         }

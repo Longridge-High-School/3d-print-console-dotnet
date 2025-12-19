@@ -6,5 +6,6 @@ wwwroot/data/
 wwwroot/img/
 wwwroot/js/
 wwwroot/console.html
+wwwroot/3dprintconsole.webmanifest
 /3d-print-console.cfg
 utilities/Installers/Windows/3d-print-console-dotnet-win64.exe

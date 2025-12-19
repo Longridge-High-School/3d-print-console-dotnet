@@ -17,9 +17,18 @@ namespace PageLogic
                 filePath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "wwwroot", "data", "config.json");   
             #endif
 
-            currentConfig = JsonSerializer.Deserialize<ConfigObject> (File.ReadAllText (filePath));
-            smallScreenLiveColourNoAlpha = currentConfig.smallScreenLiveColour.Substring (0, currentConfig.smallScreenLiveColour.Length - 2);
-            transparency = int.Parse (currentConfig.smallScreenLiveColour.Substring (currentConfig.smallScreenLiveColour.Length - 2), System.Globalization.NumberStyles.HexNumber);
+            try
+            {
+                currentConfig = JsonSerializer.Deserialize<ConfigObject> (File.ReadAllText (filePath));
+                smallScreenLiveColourNoAlpha = currentConfig.smallScreenLiveColour.Substring (0, currentConfig.smallScreenLiveColour.Length - 2);
+                transparency = int.Parse (currentConfig.smallScreenLiveColour.Substring (currentConfig.smallScreenLiveColour.Length - 2), System.Globalization.NumberStyles.HexNumber);
+            }
+            catch
+            {
+                currentConfig = new ConfigObject ();
+                ServerOutput.WriteLine ("[!] /data/config.json not found!");
+            }
+            
             Task.Run (CheckAuthCookie);
         }
 

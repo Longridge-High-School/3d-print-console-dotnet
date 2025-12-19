@@ -15,30 +15,45 @@ namespace PageLogic
             #else
                 filePath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "wwwroot", "data", "printers.json");   
             #endif
-
-            printers = JsonSerializer.Deserialize<List<PrinterObject>> (File.ReadAllText (filePath));
-
-            foreach (PrinterObject printer in printers) // Set transparency values seperately because the HTML colour element does not support alpha channels???
+            try
             {
-                if (printer.filament.Length > 7) // If the string is too short, there is no alpha applied.
-                {
-                    int transparency = int.Parse (printer.filament.Substring (printer.filament.Length - 2), System.Globalization.NumberStyles.HexNumber);
+                printers = JsonSerializer.Deserialize<List<PrinterObject>> (File.ReadAllText (filePath));
 
-                    if (transparency <= 128)
+                foreach (PrinterObject printer in printers) // Set transparency values seperately because the HTML colour element does not support alpha channels???
+                {
+                    if (printer.filament.Length > 7) // If the string is too short, there is no alpha applied.
                     {
-                        transparencies.Add (printer.id, true);
+                        try
+                        {
+                            int transparency = int.Parse (printer.filament.Substring (printer.filament.Length - 2), System.Globalization.NumberStyles.HexNumber);
+
+                            if (transparency <= 128)
+                            {
+                                transparencies.Add (printer.id, true);
+                            }
+                            else
+                            {
+                                transparencies.Add (printer.id, false);
+                            }
+
+                            printer.filament = printer.filament.Substring (0, 7); // Trim alpha values.
+                        }
+                        catch
+                        {
+                            ServerOutput.WriteLine ("[!] Failed to covert transparency on " + printer.name + ". Try manually setting the filament colour?");
+                            transparencies.Add (printer.id, false);
+                        }
                     }
                     else
                     {
                         transparencies.Add (printer.id, false);
                     }
-
-                    printer.filament = printer.filament.Substring (0, 7); // Trim alpha values.
                 }
-                else
-                {
-                    transparencies.Add (printer.id, false);
-                }
+            }
+            catch
+            {
+                printers = new List<PrinterObject> ();
+                ServerOutput.WriteLine ("[!] /data/printers.json not found!");
             }
 
             Task.Run (CheckAuthCookie);

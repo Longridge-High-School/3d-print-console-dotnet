@@ -23,6 +23,15 @@ namespace PageLogic
 
             try
             {
+                directories = Directory.GetDirectories (widgetDirectory);
+            }
+            catch
+            {
+                ServerOutput.WriteLine ("[!] /data/widgets/ directory not found!");
+            }
+
+            try
+            {
                 widgets = JsonSerializer.Deserialize<List<WidgetObject>> (File.ReadAllText (filePath));
             }
             catch (JsonException)
@@ -30,9 +39,12 @@ namespace PageLogic
                 FixBools (); // Remove the "s from around the booleans. They were in there because JavaScript doesn't care. C#, however, does.
                 widgets = JsonSerializer.Deserialize<List<WidgetObject>> (File.ReadAllText (filePath));
             }
+            catch
+            {
+                widgets = new List<WidgetObject> ();
+                ServerOutput.WriteLine ("[!] /data/widgets.json not found!");
+            }
             
-            directories = Directory.GetDirectories (widgetDirectory);
-
             Task.Run (CheckAuthCookie);
         }
 
