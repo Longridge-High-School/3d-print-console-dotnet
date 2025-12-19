@@ -40,7 +40,7 @@ namespace PageLogic
                         }
                         catch
                         {
-                            ServerOutput.WriteLine ("[!] Failed to covert transparency on " + printer.name + ". Try manually setting the filament colour?");
+                            ServerOutput.WriteLine ("[!] Failed to convert transparency on " + printer.name + ". Try manually setting the filament colour?");
                             transparencies.Add (printer.id, false);
                         }
                     }
