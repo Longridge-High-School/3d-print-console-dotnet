@@ -1,5 +1,0 @@
-Remember, to run 3D Print Console .NET, you need the following dependencies:
-
-    - The .NET 8 Runtime
-    - A Redis Server (this can be on this machine or a seperate server)
-    - PowerShell

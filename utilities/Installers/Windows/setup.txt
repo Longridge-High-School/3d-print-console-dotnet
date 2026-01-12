@@ -1,3 +1,0 @@
-3D Print Console .NET does not come with the 3D Print Console files!
-
-To install the files, run the PowerShell script in your 3D Print Console .NET install folder.

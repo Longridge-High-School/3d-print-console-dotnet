@@ -4,23 +4,23 @@ Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
 Console.WriteLine ("************************\n");
 Console.WriteLine ("Version: v1.0.0");
-Console.WriteLine ("Copyright (C) Longridge High School 2025");
+Console.WriteLine ("Copyright (C) Longridge High School 2026");
 Console.WriteLine ("Licensed under the M.I.T license.\n");
-
-ServerOutput.WriteLine ("Starting 3D Print Console .NET...", false);
 
 if (File.Exists ("3d-print-console.cfg"))
 {
     ServerOutput.WriteLine ("Loading settings from 3d-print-console.cfg...");
     Globals.LoadFromFile ();
+    ServerOutput.WriteLine ("Starting 3D Print Console .NET...", false);
+    ServerOutput.WriteLine ("Settings loaded from 3d-print-console.cfg.", false);
 }
 else
 {
     ServerOutput.WriteLine ("Loading settings from environment variables...");
     Globals.LoadFromEnvironment ();
+    ServerOutput.WriteLine ("Starting 3D Print Console .NET...", false);
+    ServerOutput.WriteLine ("Settings loaded from environment variables.", false);
 }
-
-Cache.Connect ();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +29,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpContextAccessor ();
+builder.Services.AddSingleton <Cache> ();
 
 var app = builder.Build();
 

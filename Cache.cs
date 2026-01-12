@@ -1,37 +1,30 @@
-using System.Linq.Expressions;
-using NRedisStack;
-using NRedisStack.RedisStackCommands;
-using StackExchange.Redis;
-
-public static class Cache
+public class Cache
 {
-    private static IDatabase database;
+    private Dictionary <string, string> keyValuePairs = new Dictionary <string, string> (); 
 
-    public static void Connect ()
+    public Cache ()
     {
-        ServerOutput.WriteLine ("Connecting to Redis on " + Globals.redisURL + "...");
+    }
 
-        try
+    public void Set (string token, string expiry)
+    {
+        keyValuePairs.Add (token, expiry);
+    }
+
+    public string? Get (string token)
+    {
+        if (keyValuePairs.ContainsKey (token))
         {
-            ConnectionMultiplexer muxer = ConnectionMultiplexer.Connect (Globals.redisURL.ToString ());
-            database = muxer.GetDatabase ();            
+            return keyValuePairs [token];
         }
-        catch
+        else
         {
-            ServerOutput.WriteLine ("[!] Could not connect to Redis, exiting...");
-            Environment.Exit (1);   
+            return null;
         }
     }
 
-    public static void Set (string token, string expiry)
+    public void Delete (string token)
     {
-        database.StringSet (token, expiry);
+        keyValuePairs.Remove (token);
     }
-
-    public static string? Get (string token)
-    {
-        string? result =  database.StringGet (token);
-        return result;
-    }
-
 }

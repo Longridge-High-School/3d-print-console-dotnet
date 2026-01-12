@@ -8,6 +8,7 @@ namespace PageLogic
     {
         [Inject] private IJSRuntime javascript {get; set;}
         [Inject] public NavigationManager nav {get; set;}
+        [Inject] public Cache cache {get; set;}
         public string userPassword = "";
         public string message = "&nbsp;";
 
@@ -25,7 +26,7 @@ namespace PageLogic
                 string expiry = DateTime.Now.Add (sixHours).ToString ("ddd, dd MMM yyy HH:mm:ss UTC");
                 javascript.InvokeVoidAsync ("SetCookie", token, expiry);
                 ServerOutput.WriteLine ("Succesful login!");
-                Cache.Set (token, expiry);
+                cache.Set (token, expiry);
             }
             else
             {

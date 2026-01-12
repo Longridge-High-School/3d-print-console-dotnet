@@ -2,7 +2,6 @@ public static class Globals
 {
     public static string logPath = "log.txt";
     public static string password = "admin";
-    public static string redisURL = "localhost:6379";
     public static bool recordServerLogs = false;
     
     public static void LoadFromEnvironment ()
@@ -27,13 +26,6 @@ public static class Globals
         else
         {
             ServerOutput.WriteLine ("[!] ADMIN_PASSWORD not set! Using \"admin\", which is insecure.");
-        }
-
-        string? redisURL = Environment.GetEnvironmentVariable ("REDIS_URL");
-
-        if (redisURL != null)
-        {
-            Globals.redisURL = redisURL;
         }
 
         string? recordServerLogs = Environment.GetEnvironmentVariable ("RECORD_SERVER_LOGS");
@@ -67,10 +59,6 @@ public static class Globals
                 
                 case "ADMIN_PASSWORD":
                     password = kv [1];
-                    break;
-
-                case "REDIS_URL":
-                    redisURL = kv [1];
                     break;
 
                 case "RECORD_SERVER_LOGS":

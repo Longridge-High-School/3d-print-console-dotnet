@@ -7,6 +7,7 @@ namespace PageLogic
     {
         [Inject] public IJSRuntime javascript {get; set;}
         [Inject] public NavigationManager nav {get; set;}
+        [Inject] public Cache cache {get; set;}
         
         public async Task CheckAuthCookie ()
         {
@@ -19,7 +20,7 @@ namespace PageLogic
             }
             else
             {
-                string? expiry = Cache.Get (token);
+                string? expiry = cache.Get (token);
 
                 if (expiry == null)
                 {
@@ -31,6 +32,7 @@ namespace PageLogic
                     if (DateTime.Parse (expiry) < DateTime.UtcNow)
                     {
                         Console.WriteLine ("access_token too old!");
+                        cache.Delete (token);
                         nav.NavigateTo ("/login", true);
                     }
                 }
