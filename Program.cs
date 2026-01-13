@@ -3,7 +3,8 @@ using _3d_print_console_dotnet.Components;
 Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
 Console.WriteLine ("************************\n");
-Console.WriteLine ("Version: v1.0.0");
+//Console.WriteLine ("Version: v1.0.0");
+Console.WriteLine ("Version: v0.0.1-alpha");
 Console.WriteLine ("Copyright (C) Longridge High School 2026");
 Console.WriteLine ("Licensed under the M.I.T license.\n");
 
@@ -20,6 +21,18 @@ else
     Globals.LoadFromEnvironment ();
     ServerOutput.WriteLine ("Starting 3D Print Console .NET...", false);
     ServerOutput.WriteLine ("Settings loaded from environment variables.", false);
+}
+
+if (!File.Exists (Globals.logPath))
+{
+    try
+    {
+        File.Create (Globals.logPath);   
+    }
+    catch
+    {
+        ServerOutput.WriteLine ("[!] Could not create a log file at " + Globals.logPath + "!");
+    }
 }
 
 var builder = WebApplication.CreateBuilder(args);

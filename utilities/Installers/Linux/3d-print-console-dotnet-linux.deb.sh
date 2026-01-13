@@ -1,12 +1,12 @@
 #!/bin/bash
 
-version=v1.0.0
+version=v0.0.1-alpha
 
 echo "***********************************"
 echo "* 3D PRINT CONSOLE .NET INSTALLER *"
 echo "***********************************"
 echo
-echo "v1.0.0 for Linux (deb)"
+echo "$version for Linux (deb)"
 echo
 
 if [[ $EUID -ne 0 ]];

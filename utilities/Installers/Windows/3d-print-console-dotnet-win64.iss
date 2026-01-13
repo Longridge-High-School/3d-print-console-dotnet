@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "3D Print Console .NET"
-#define MyAppVersion "v1.0.0"
+#define MyAppVersion "v0.0.1-alpha"
 #define MyAppPublisher "Longridge High School"
 #define MyAppURL "https://github.com/Longridge-High-School/3d-print-console-dotnet"
 #define MyAppExeName "3d-print-console-dotnet.exe"
@@ -48,10 +48,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\3d-print-console-dotnet.styles.css"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\3d-print-console-dotnet.styles.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\app.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\ascii.svg"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
-Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\bootstrap\*"; DestDir: "{app}\wwwroot"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\bootstrap\*"; DestDir: "{app}\wwwroot\bootstrap"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

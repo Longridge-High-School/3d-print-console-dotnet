@@ -2,6 +2,9 @@
 
 **[3D Print Console](https://github.com/Longridge-High-School/3d-print-console) running on .NET**
 
+> [!CAUTION]
+> 3D Print Console .NET is still alpha software, and not ready for production use!
+
 ## Features
 
 - Password-protected admin user interface. No more having to change files via SFTP!
