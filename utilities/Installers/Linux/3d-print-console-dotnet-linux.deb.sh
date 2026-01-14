@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=v0.0.1-alpha
+version=v0.0.2-alpha
 
 echo "***********************************"
 echo "* 3D PRINT CONSOLE .NET INSTALLER *"

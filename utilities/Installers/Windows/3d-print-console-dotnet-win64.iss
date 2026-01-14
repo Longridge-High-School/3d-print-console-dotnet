@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "3D Print Console .NET"
-#define MyAppVersion "v0.0.1-alpha"
+#define MyAppVersion "v0.0.2-alpha"
 #define MyAppPublisher "Longridge High School"
 #define MyAppURL "https://github.com/Longridge-High-School/3d-print-console-dotnet"
 #define MyAppExeName "3d-print-console-dotnet.exe"
@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\{#MyAppName}
+DefaultDirName=C:\{#MyAppName}
 ; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run
 ; on anything but x64 and Windows 11 on Arm.
 ArchitecturesAllowed=x64compatible

@@ -1,10 +1,11 @@
 using _3d_print_console_dotnet.Components;
+using Microsoft.Extensions.Hosting.WindowsServices;
+using System.Runtime.InteropServices;
 
 Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
 Console.WriteLine ("************************\n");
-//Console.WriteLine ("Version: v1.0.0");
-Console.WriteLine ("Version: v0.0.1-alpha");
+Console.WriteLine ("Version: v0.0.2-alpha");
 Console.WriteLine ("Copyright (C) Longridge High School 2026");
 Console.WriteLine ("Licensed under the M.I.T license.\n");
 
@@ -43,6 +44,11 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpContextAccessor ();
 builder.Services.AddSingleton <Cache> ();
+
+if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows))
+{
+    builder.Services.AddWindowsService ();
+}
 
 var app = builder.Build();
 

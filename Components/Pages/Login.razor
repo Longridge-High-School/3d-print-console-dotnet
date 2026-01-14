@@ -8,7 +8,7 @@
 
 <h1>Log In to 3D Print Console .NET</h1>
 <br />
-<form>
+<form onsubmit = "return false;">
     <div class="mb-3">
         <label for = "password" class = "form-label fw-bold">Admin Password:</label>
         <input type = "password" class = "form-control form-control-password" id = "password" @bind = "@userPassword" aria-describedby = "passwordDescription">
@@ -23,7 +23,6 @@
     function SetCookie (uid, expiry)
     {
         document.cookie = `access_token=${uid}; expires=${expiry}`;
-        window.location.replace ("/admin");
     }
 
     function GetCookie ()

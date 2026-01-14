@@ -14,7 +14,7 @@ namespace PageLogic
 
         public LoginBase ()
         {
-            Task.Run (CheckAuthCookie);
+            //Task.Run (CheckAuthCookie);
         }
 
         public void CheckPassword ()
@@ -24,9 +24,10 @@ namespace PageLogic
                 string token = Guid.NewGuid ().ToString ();
                 TimeSpan sixHours = new TimeSpan (6, 0, 0);
                 string expiry = DateTime.Now.Add (sixHours).ToString ("ddd, dd MMM yyy HH:mm:ss UTC");
-                javascript.InvokeVoidAsync ("SetCookie", token, expiry);
                 ServerOutput.WriteLine ("Succesful login!");
                 cache.Set (token, expiry);
+                javascript.InvokeVoidAsync ("SetCookie", token, expiry);
+                nav.NavigateTo ("/admin", true);
             }
             else
             {

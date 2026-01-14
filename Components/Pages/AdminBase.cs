@@ -63,7 +63,6 @@ namespace PageLogic
             {
                 printers = new List<PrinterObject> ();
                 ServerOutput.WriteLine ("[!] /data/printers.json not found!");
-                Console.WriteLine (error.ToString ());
             }
 
             try
