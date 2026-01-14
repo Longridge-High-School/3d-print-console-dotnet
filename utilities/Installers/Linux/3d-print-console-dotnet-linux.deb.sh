@@ -15,7 +15,7 @@ then
    exit 1
 fi
 
-dotnet --version >> /dev/null
+dotnet --info >> /dev/null
 
 if [[ $? -ne 0 ]];
 then
@@ -41,18 +41,19 @@ then
 fi
 
 echo "Downloading 3D Print Console .NET from GitHub..."
-wget "https://github.com/Longridge-High-School/3d-print-console-dotnet/releases/download/$version/3d-print-console-dotnet-$version.zip" -O /tmp/3d-print-console-dotnet.zip -q --show-progress
+wget --no-check-certificate "https://github.com/Longridge-High-School/3d-print-console-dotnet/releases/download/$version/3d-print-console-dotnet-$version.zip" -O /tmp/3d-print-console-dotnet.zip -q --show-progress
 echo "Extracting package..."
-unzip /tmp/3d-print-console-dotnet.zip -d /srv/ >> /dev/null
+mkdir /srv/3d-print-console-dotnet
+unzip /tmp/3d-print-console-dotnet.zip -d /srv/3d-print-console-dotnet >> /dev/null
 rm -f /tmp/3d-print-console-dotnet.zip
 mv /tmp/LICENSE.txt /srv/3d-print-console-dotnet/LICENSE.txt
-wget "https://raw.githubusercontent.com/Longridge-High-School/3d-print-console-dotnet/refs/heads/main/utilities/Sample%20Config%20File/3d-print-console.cfg" -O /srv/3d-print-console.cfg -q --show-progress
+wget --no-check-certificate "https://raw.githubusercontent.com/Longridge-High-School/3d-print-console-dotnet/refs/heads/main/utilities/Sample%20Config%20File/3d-print-console.cfg" -O /srv//3d-print-console-dotnet/3d-print-console.cfg -q --show-progress
 
 read -p "Which user will 3D Print Console .NET run as? " appUser
 chown -R $appUser /srv/3d-print-console-dotnet/*
 
 echo "Downloading systemd file..."
-wget "https://raw.githubusercontent.com/Longridge-High-School/3d-print-console-dotnet/refs/tags/$version/utilities/systemd/3d-print-console.service" -O /etc/systemd/system/3d-print-console.service -q --show-progress
+wget --no-check-certificate "https://raw.githubusercontent.com/Longridge-High-School/3d-print-console-dotnet/refs/tags/$version/utilities/systemd/3d-print-console.service" -O /etc/systemd/system/3d-print-console.service -q --show-progress
 sed -i -e "s/YOUR_USER_HERE/$appUser/g" /etc/systemd/system/3d-print-console.service
 
 echo "Starting 3D Print Console .NET service..."
