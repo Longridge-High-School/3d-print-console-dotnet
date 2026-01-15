@@ -51,7 +51,10 @@ Source: "C:\LHS\3d-print-console-dotnet\LICENSE.txt"; DestDir: "{app}"; Flags: i
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\3d-print-console-dotnet.styles.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\app.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\ascii.svg"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
+Source: "C:\LHS\3d-print-console-dotnet\utilities\Sample Config File\3d-print-console.cfg"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\bootstrap\*"; DestDir: "{app}\wwwroot\bootstrap"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\runtimes\*"; DestDir: "{app}\runtimes"; Flags: ignoreversion recursesubdirs createallsubdirs
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

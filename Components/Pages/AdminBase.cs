@@ -2,6 +2,8 @@ using System.Text.Json;
 using System.Net;
 using System.IO.Compression;
 using Microsoft.VisualBasic.FileIO;
+using System.Runtime.InteropServices;
+
 
 namespace PageLogic
 {    
@@ -126,7 +128,7 @@ namespace PageLogic
             nav.NavigateTo (nav.Uri, true); // Reload page.
         }
 
-        public void UpdateConsole ()
+        public async void UpdateConsole ()
         {
             #if DEBUG
                 string data = System.IO.Path.Combine (System.IO.Directory.GetCurrentDirectory (), "wwwroot", "data");
@@ -136,10 +138,21 @@ namespace PageLogic
                 string wwwroot = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "wwwroot");   
             #endif
 
+            string temp;
+            
+            if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows))
+            {
+                temp = Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData) + "\\Temp";
+            }
+            else
+            {
+                temp = "/tmp";
+            }
+
             try
             {
-                File.Delete (Path.Combine (Path.GetTempPath (), "3dprintconsole.zip"));
-                Directory.Delete (Path.Combine (Path.GetTempPath () + "3dprintconsole"), true);
+                File.Delete (Path.Combine (temp, "3dprintconsole.zip"));
+                Directory.Delete (Path.Combine (temp + "3dprintconsole"), true);
             }
             catch
             {
@@ -149,35 +162,36 @@ namespace PageLogic
             {
                 ServerOutput.WriteLine ("Downloading 3D Print Console...");
 
-                using (WebClient client = new WebClient ())
-                {
-                    client.DownloadFile ("https://github.com/Longridge-High-School/3d-print-console/archive/refs/heads/main.zip", Path.GetTempPath () + "3dprintconsole.zip");
-                }
+                HttpClient client = new HttpClient ();
+
+                byte[] archive = await client.GetByteArrayAsync ("https://github.com/Longridge-High-School/3d-print-console/archive/refs/heads/main.zip");
+                await File.WriteAllBytesAsync (Path.Combine (temp, "3dprintconsole.zip"), archive);
+                client.Dispose ();
 
                 ServerOutput.WriteLine ("Extracting archive...");
-                ZipFile.ExtractToDirectory (Path.Combine (Path.GetTempPath (), "3dprintconsole.zip"), Path.Combine (Path.GetTempPath () + "3dprintconsole"));
+                ZipFile.ExtractToDirectory (Path.Combine (temp, "3dprintconsole.zip"), Path.Combine (temp + "3dprintconsole"));
 
                 ServerOutput.WriteLine ("Copying files...");
 
-                File.Copy (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "console", "index.html"), Path.Combine (wwwroot, "console.html"), true);
-                File.Copy (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "console", "3dprintconsole.webmanifest"), Path.Combine (wwwroot, "3dprintconsole.webmanifest"), true);
-                FileSystem.CopyDirectory (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "console", "css"), Path.Combine (wwwroot, "css"), true);
-                FileSystem.CopyDirectory (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "console", "img"), Path.Combine (wwwroot, "img"), true);
-                FileSystem.CopyDirectory (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "console", "js"), Path.Combine (wwwroot, "js"), true);
+                File.Copy (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "console", "index.html"), Path.Combine (wwwroot, "console.html"), true);
+                File.Copy (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "console", "3dprintconsole.webmanifest"), Path.Combine (wwwroot, "3dprintconsole.webmanifest"), true);
+                FileSystem.CopyDirectory (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "console", "css"), Path.Combine (wwwroot, "css"), true);
+                FileSystem.CopyDirectory (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "console", "img"), Path.Combine (wwwroot, "img"), true);
+                FileSystem.CopyDirectory (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "console", "js"), Path.Combine (wwwroot, "js"), true);
 
                 if (!Directory.Exists (data))
                 {
                     Directory.CreateDirectory (data);
                     Directory.CreateDirectory (Path.Combine (data, "widgets"));
-                    File.Copy (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "default", "cameras.json"), Path.Combine (data, "cameras.json"));
-                    File.Copy (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "default", "config.json"), Path.Combine (data, "config.json"));
-                    File.Copy (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "default", "printers.json"), Path.Combine (data, "printers.json"));
-                    File.Copy (Path.Combine (Path.GetTempPath (), "3dprintconsole", "3d-print-console-main", "default", "widgets.json"), Path.Combine (data, "widgets.json"));
+                    File.Copy (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "default", "cameras.json"), Path.Combine (data, "cameras.json"));
+                    File.Copy (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "default", "config.json"), Path.Combine (data, "config.json"));
+                    File.Copy (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "default", "printers.json"), Path.Combine (data, "printers.json"));
+                    File.Copy (Path.Combine (temp, "3dprintconsole", "3d-print-console-main", "default", "widgets.json"), Path.Combine (data, "widgets.json"));
                 }
 
                 ServerOutput.WriteLine ("Cleaning up...");
-                File.Delete (Path.Combine (Path.GetTempPath (), "3dprintconsole.zip"));
-                Directory.Delete (Path.Combine (Path.GetTempPath () + "3dprintconsole"), true);
+                File.Delete (Path.Combine (temp, "3dprintconsole.zip"));
+                Directory.Delete (Path.Combine (temp + "3dprintconsole"), true);
             }
             catch (Exception error)
             {
