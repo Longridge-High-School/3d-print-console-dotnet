@@ -1,6 +1,7 @@
 using _3d_print_console_dotnet.Components;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using System.Runtime.InteropServices;
+using System.IO.Compression;
 
 Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
@@ -36,7 +37,7 @@ if (!File.Exists (Globals.logPath))
     }
 }
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder (args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

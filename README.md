@@ -12,16 +12,11 @@
 - An easy way of installing widgets.
 - Integrated log viewer.
 
-## Getting Started (Windows)
-
-TODO
-
-## Getting Started (Linux)
+## Getting Started
 
 TODO
 
 ## Future Features
 
-- An installer for Linux using RPM.
+- Linux support.
 - Porting to a newer version of .NET when .NET 8 goes end of life.
-- Make widgets reorderable.

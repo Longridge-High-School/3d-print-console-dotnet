@@ -142,11 +142,11 @@ namespace PageLogic
             
             if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows))
             {
-                temp = Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData) + "\\Temp";
+                temp = Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData) + "\\Temp\\";
             }
             else
             {
-                temp = "/tmp";
+                temp = "/tmp/";
             }
 
             try
@@ -169,7 +169,7 @@ namespace PageLogic
                 client.Dispose ();
 
                 ServerOutput.WriteLine ("Extracting archive...");
-                ZipFile.ExtractToDirectory (Path.Combine (temp, "3dprintconsole.zip"), Path.Combine (temp + "3dprintconsole"));
+                await Task.Run (() => ZipFile.ExtractToDirectory (Path.Combine (temp, "3dprintconsole.zip"), Path.Combine (temp + "3dprintconsole")));
 
                 ServerOutput.WriteLine ("Copying files...");
 
@@ -192,6 +192,7 @@ namespace PageLogic
                 ServerOutput.WriteLine ("Cleaning up...");
                 File.Delete (Path.Combine (temp, "3dprintconsole.zip"));
                 Directory.Delete (Path.Combine (temp + "3dprintconsole"), true);
+                ServerOutput.WriteLine ("3D Print Console up to date!");
             }
             catch (Exception error)
             {

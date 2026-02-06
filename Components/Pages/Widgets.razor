@@ -56,6 +56,8 @@
                         <input type = "checkbox" class = "form-control form-check-input" id = "enabled" @bind = "widget.enabled" aria-describedby = "enabledDescription">
                         <div id = "enabledDescription" class = "form-text">Is this widget visible on the console page?</div>
                     </div>
+                    <button type = "button" class = "btn btn-light" @onclick = "@(e => MoveWidgetUp (@widget))">⬆️ Move Up</button>
+                    <button type = "button" class = "btn btn-light" @onclick = "@(e => MoveWidgetDown (@widget))">⬇️ Move Down</button>
                     <button type = "button" class = "btn btn-danger" @onclick = "@(e => DeleteWidget (@widget.title, @widget.url))">Delete</button>
                 </form>
             </div>

@@ -91,6 +91,66 @@ namespace PageLogic
             }
         }
 
+        public void MoveWidgetUp (WidgetObject current)
+        {
+            int index = widgets.IndexOf (current);
+
+            if (index == 0)
+            {
+                return;
+            }
+
+            WidgetObject duplicate = new WidgetObject ();
+            duplicate.title = current.title;
+            duplicate.url = current.url;
+            duplicate.args = current.args;
+            duplicate.enabled = current.enabled;
+
+            current.title = widgets [index - 1].title;
+            current.url = widgets [index - 1].url;
+            current.args = widgets [index - 1].args;
+            current.enabled = widgets [index - 1].enabled;
+
+            widgets [index - 1] = duplicate;
+
+            Console.WriteLine ("Updated widgets.json to " + JsonSerializer.Serialize (widgets));
+            ServerOutput.WriteLine ("Updated widgets.json.", false);
+            File.WriteAllText (filePath, JsonSerializer.Serialize (widgets));
+
+            StateHasChanged ();
+            return;
+        }
+
+        public void MoveWidgetDown (WidgetObject current)
+        {
+            int index = widgets.IndexOf (current);
+
+            if (index == widgets.Count - 1)
+            {
+                return;
+            }
+
+            WidgetObject duplicate = new WidgetObject ();
+            duplicate.title = current.title;
+            duplicate.url = current.url;
+            duplicate.args = current.args;
+            duplicate.enabled = current.enabled;
+
+            current.title = widgets [index + 1].title;
+            current.url = widgets [index + 1].url;
+            current.args = widgets [index + 1].args;
+            current.enabled = widgets [index + 1].enabled;
+
+            widgets [index + 1] = duplicate;
+
+            Console.WriteLine ("Updated widgets.json to " + JsonSerializer.Serialize (widgets));
+            ServerOutput.WriteLine ("Updated widgets.json.", false);
+            File.WriteAllText (filePath, JsonSerializer.Serialize (widgets));
+
+            StateHasChanged ();
+            return;
+        }
+
         public async Task UploadAndExtract (InputFileChangeEventArgs input)
         {
             try
