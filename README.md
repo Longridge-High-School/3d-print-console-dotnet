@@ -11,12 +11,8 @@
 - Full compatibility with 3D Print Console v2.2.0 or later. It still uses all the original code, and all the 3D Print Console logic runs in your browser, just like it always has.
 - An easy way of installing widgets.
 - Integrated log viewer.
+- Runs on Windows and Docker.
 
 ## Getting Started
 
 TODO
-
-## Future Features
-
-- Linux support.
-- Porting to a newer version of .NET when .NET 8 goes end of life.

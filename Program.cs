@@ -48,6 +48,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpContextAccessor ();
 builder.Services.AddSingleton <Cache> ();
+builder.WebHost.UseStaticWebAssets();
 
 if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows))
 {

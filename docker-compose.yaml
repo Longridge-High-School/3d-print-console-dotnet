@@ -1,0 +1,9 @@
+services:
+  console:
+    build: .
+    ports:
+      - "8000:8080"
+    environment:
+      - RECORD_SERVER_LOGS=false
+      - ADMIN_PASSWORD=abc123
+    restart: unless-stopped
