@@ -10,19 +10,22 @@ Console.WriteLine ("Version: v0.0.2-alpha");
 Console.WriteLine ("Copyright (C) Longridge High School 2026");
 Console.WriteLine ("Licensed under the M.I.T license.\n");
 
+ServerOutput.WriteLine ("Starting 3D Print Console .NET...");
+ServerOutput.WriteLine ("Loading settings from environment variables...");
+Globals.LoadFromEnvironment ();
+ServerOutput.WriteLine ("Settings loaded from environment variables.", false);
+
 if (File.Exists ("3d-print-console.cfg"))
 {
     ServerOutput.WriteLine ("Loading settings from 3d-print-console.cfg...");
     Globals.LoadFromFile ();
-    ServerOutput.WriteLine ("Starting 3D Print Console .NET...", false);
-    ServerOutput.WriteLine ("Settings loaded from 3d-print-console.cfg.", false);
+    ServerOutput.WriteLine ("Settings loaded from 3d-print-console.cfg.");
 }
-else
+
+if (Globals.password == "")
 {
-    ServerOutput.WriteLine ("Loading settings from environment variables...");
-    Globals.LoadFromEnvironment ();
-    ServerOutput.WriteLine ("Starting 3D Print Console .NET...", false);
-    ServerOutput.WriteLine ("Settings loaded from environment variables.", false);
+    Globals.password = "admin";
+    ServerOutput.WriteLine ("[!] Admin password not set! Defaulting to \"admin\" which is insecure!");
 }
 
 if (!File.Exists (Globals.logPath))

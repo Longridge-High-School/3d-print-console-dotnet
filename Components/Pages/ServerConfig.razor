@@ -1,0 +1,22 @@
+@page "/admin/serverconfig"
+@using Microsoft.AspNetCore.Components.Sections
+@using PageLogic
+@inherits ServerConfigBase
+
+<PageTitle>Server Config Editor</PageTitle>
+
+<h1>Server Config Editor</h1>
+<hr />
+
+@if (loggedIn)
+{
+    @if (@config != "")
+    {
+        <textarea class = "ServerConfig" rows = "30" @bind = "config"></textarea>
+        <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
+    }
+    else
+    {
+        <span>⚠️ Could not find <samp>3d-print-console.cfg</samp>. You may be using environment variables for configuration.</span>
+    }
+}

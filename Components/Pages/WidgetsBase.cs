@@ -44,8 +44,11 @@ namespace PageLogic
                 widgets = new List<WidgetObject> ();
                 ServerOutput.WriteLine ("[!] /data/widgets.json not found!");
             }
-            
-            Task.Run (CheckAuthCookie);
+        }
+
+        protected override async Task OnInitializedAsync ()
+        {
+            await Task.Run (CheckAuthCookie);
         }
 
         private void FixBools ()

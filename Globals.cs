@@ -1,7 +1,7 @@
 public static class Globals
 {
     public static string logPath = "log.txt";
-    public static string password = "admin";
+    public static string password = "";
     public static bool recordServerLogs = false;
     
     public static void LoadFromEnvironment ()
@@ -12,20 +12,12 @@ public static class Globals
         {
             Globals.logPath = logPath;
         }
-        else
-        {
-            ServerOutput.WriteLine ("[!] LOG_PATH not set!");
-        }
 
         string? password = Environment.GetEnvironmentVariable ("ADMIN_PASSWORD");
 
         if (password != null)
         {
             Globals.password = password;
-        }
-        else
-        {
-            ServerOutput.WriteLine ("[!] ADMIN_PASSWORD not set! Using \"admin\", which is insecure.");
         }
 
         string? recordServerLogs = Environment.GetEnvironmentVariable ("RECORD_SERVER_LOGS");

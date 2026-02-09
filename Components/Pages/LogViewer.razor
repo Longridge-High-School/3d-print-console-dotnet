@@ -7,6 +7,11 @@
 
 <h1>Log Viewer</h1>
 <hr />
-<button type = "button" class = "btn btn-success" @onclick = "Reload">Reload Page</button>
-<hr />
-<samp>@((MarkupString)log)</samp>
+@if (loggedIn)
+{
+    <div>
+        <button type = "button" class = "btn btn-success" @onclick = "Reload">Reload Page</button>
+        <hr />
+        <samp>@((MarkupString)log)</samp>
+    </div>
+}

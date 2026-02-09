@@ -24,8 +24,11 @@ namespace PageLogic
                 cameras = new List<CameraObject> ();
                 ServerOutput.WriteLine ("[!] /data/cameras.json not found!");
             }
+        }
 
-            Task.Run (CheckAuthCookie);
+        protected override async Task OnInitializedAsync ()
+        {
+            await Task.Run (CheckAuthCookie);
         }
 
         public void Save ()

@@ -55,8 +55,11 @@ namespace PageLogic
                 printers = new List<PrinterObject> ();
                 ServerOutput.WriteLine ("[!] /data/printers.json not found!");
             }
+        }
 
-            Task.Run (CheckAuthCookie);
+        protected override async Task OnInitializedAsync ()
+        {
+            await Task.Run (CheckAuthCookie);
         }
 
         public void Save ()

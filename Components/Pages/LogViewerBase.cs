@@ -12,8 +12,11 @@ namespace PageLogic
             {
                 log += content [i] + "<br/>";
             }
-
-            Task.Run (CheckAuthCookie);
+        }
+        
+        protected override async Task OnInitializedAsync ()
+        {
+            await Task.Run (CheckAuthCookie);
         }
 
         public void Reload ()

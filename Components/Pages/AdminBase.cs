@@ -108,8 +108,11 @@ namespace PageLogic
                 log = "‼️ No log file found!";
                 ServerOutput.WriteLine ("[!] Log file not found!");
             }
+        }
 
-            Task.Run (CheckAuthCookie);
+        protected override async Task OnInitializedAsync ()
+        {
+            await Task.Run (CheckAuthCookie);
         }
 
         public void SavePrinters ()

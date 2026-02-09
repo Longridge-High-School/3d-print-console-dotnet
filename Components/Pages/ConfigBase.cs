@@ -28,8 +28,11 @@ namespace PageLogic
                 currentConfig = new ConfigObject ();
                 ServerOutput.WriteLine ("[!] /data/config.json not found!");
             }
-            
-            Task.Run (CheckAuthCookie);
+        }
+
+        protected override async Task OnInitializedAsync ()
+        {
+            await Task.Run (CheckAuthCookie);
         }
 
         public void Save ()

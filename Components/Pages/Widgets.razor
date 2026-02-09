@@ -28,42 +28,45 @@
 <hr />
 <h3>Widget Instances</h3>
 <div>
-    @foreach (WidgetObject widget in widgets)
+    @if (loggedIn)
     {
-        <div class = "card">
-            <div class = "card-header">
-                <h4 class = "card-title">@widget.title</h4>
+        @foreach (WidgetObject widget in widgets)
+        {
+            <div class = "card">
+                <div class = "card-header">
+                    <h4 class = "card-title">@widget.title</h4>
+                </div>
+                <div class = "card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for = "title" class = "form-label fw-bold">Widget Title:</label>
+                            <input type = "text" class = "form-control form-control-text" id = "title" @bind = "widget.title" aria-describedby = "titleDescription">
+                            <div id = "titleDescription" class = "form-text">Title of this widget instance.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for = "url" class = "form-label fw-bold">Widget HTML File:</label>
+                            <input type = "text" class = "form-control form-control-text" id = "url" @bind = "widget.url" aria-describedby = "urlDescription">
+                            <div id = "urlDescription" class = "form-text">HTML file this widget uses (relative to <samp>/data/widgets</samp>).</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for = "args" class = "form-label fw-bold">Arguments:</label>
+                            <input type = "text" class = "form-control form-control-text" id = "args" @bind = "widget.args" aria-describedby = "argsDescription">
+                            <div id = "argsDescription" class = "form-text">Data passed to the widget in the URL.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for = "enabled" class = "form-label fw-bold">Enabled?</label>
+                            <input type = "checkbox" class = "form-control form-check-input" id = "enabled" @bind = "widget.enabled" aria-describedby = "enabledDescription">
+                            <div id = "enabledDescription" class = "form-text">Is this widget visible on the console page?</div>
+                        </div>
+                        <button type = "button" class = "btn btn-light" @onclick = "@(e => MoveWidgetUp (@widget))">⬆️ Move Up</button>
+                        <button type = "button" class = "btn btn-light" @onclick = "@(e => MoveWidgetDown (@widget))">⬇️ Move Down</button>
+                        <button type = "button" class = "btn btn-danger" @onclick = "@(e => DeleteWidget (@widget.title, @widget.url))">Delete</button>
+                    </form>
+                </div>
             </div>
-            <div class = "card-body">
-                <form>
-                    <div class="mb-3">
-                        <label for = "title" class = "form-label fw-bold">Widget Title:</label>
-                        <input type = "text" class = "form-control form-control-text" id = "title" @bind = "widget.title" aria-describedby = "titleDescription">
-                        <div id = "titleDescription" class = "form-text">Title of this widget instance.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for = "url" class = "form-label fw-bold">Widget HTML File:</label>
-                        <input type = "text" class = "form-control form-control-text" id = "url" @bind = "widget.url" aria-describedby = "urlDescription">
-                        <div id = "urlDescription" class = "form-text">HTML file this widget uses (relative to <samp>/data/widgets</samp>).</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for = "args" class = "form-label fw-bold">Arguments:</label>
-                        <input type = "text" class = "form-control form-control-text" id = "args" @bind = "widget.args" aria-describedby = "argsDescription">
-                        <div id = "argsDescription" class = "form-text">Data passed to the widget in the URL.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for = "enabled" class = "form-label fw-bold">Enabled?</label>
-                        <input type = "checkbox" class = "form-control form-check-input" id = "enabled" @bind = "widget.enabled" aria-describedby = "enabledDescription">
-                        <div id = "enabledDescription" class = "form-text">Is this widget visible on the console page?</div>
-                    </div>
-                    <button type = "button" class = "btn btn-light" @onclick = "@(e => MoveWidgetUp (@widget))">⬆️ Move Up</button>
-                    <button type = "button" class = "btn btn-light" @onclick = "@(e => MoveWidgetDown (@widget))">⬇️ Move Down</button>
-                    <button type = "button" class = "btn btn-danger" @onclick = "@(e => DeleteWidget (@widget.title, @widget.url))">Delete</button>
-                </form>
-            </div>
-        </div>
-        <br/>
+            <br/>
+        }
+        <button type = "button" class = "btn btn-primary" @onclick="AddNewWidget">Add New Widget</button>
+        <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
     }
-    <button type = "button" class = "btn btn-primary" @onclick="AddNewWidget">Add New Widget</button>
-    <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
 </div>
