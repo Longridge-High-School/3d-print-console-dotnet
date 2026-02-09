@@ -6,7 +6,7 @@ using System.IO.Compression;
 Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
 Console.WriteLine ("************************\n");
-Console.WriteLine ("Version: v0.0.2-alpha");
+Console.WriteLine ("Version: v0.0.3-alpha");
 Console.WriteLine ("Copyright (C) Longridge High School 2026");
 Console.WriteLine ("Licensed under the M.I.T license.\n");
 
