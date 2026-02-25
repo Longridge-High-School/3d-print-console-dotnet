@@ -1,36 +1,27 @@
 public static class Globals
 {
-    public static string logPath = "log.txt";
-    public static string password = "";
-    public static bool recordServerLogs = false;
+    private static Dictionary<string, string> vars = new Dictionary<string, string>
+    {
+        {"LOG_PATH", "log.txt"},
+        {"ADMIN_PASSWORD", ""},
+        {"RECORD_SERVER_LOGS", "false"},
+        {"HTTP_PORT", "5000"},
+        {"HTTPS_PORT", "50001"},
+        {"USE_HTTP", "true"},
+        {"USE_HTTPS", "false"},
+        {"SSL_PATH", ""},
+        {"SSL_PASSWORD", ""}
+    };
     
     public static void LoadFromEnvironment ()
     {
-        string? logPath = Environment.GetEnvironmentVariable ("LOG_PATH");
-
-        if (logPath != null)
+        foreach (string key in vars.Keys)
         {
-            Globals.logPath = logPath;
-        }
+            string? env = Environment.GetEnvironmentVariable (key);
 
-        string? password = Environment.GetEnvironmentVariable ("ADMIN_PASSWORD");
-
-        if (password != null)
-        {
-            Globals.password = password;
-        }
-
-        string? recordServerLogs = Environment.GetEnvironmentVariable ("RECORD_SERVER_LOGS");
-
-        if (recordServerLogs != null)
-        {
-            try
+            if (env != null)
             {
-                Globals.recordServerLogs = Boolean.Parse (recordServerLogs);
-            }
-            catch
-            {
-                ServerOutput.WriteLine ("[!] RECORD_SERVER_LOGS is not a boolean.");
+                vars [key] = env;
             }
         }
     }
@@ -43,32 +34,34 @@ public static class Globals
         {
             string[] kv = line.Split ('=');
 
-            switch (kv [0].ToUpperInvariant ())
+            if (vars.ContainsKey (kv [0].ToUpperInvariant ()))
             {
-                case "LOG_PATH":
-                    logPath = kv [1];
-                    break;
-                
-                case "ADMIN_PASSWORD":
-                    password = kv [1];
-                    break;
-
-                case "RECORD_SERVER_LOGS":
-                    try
-                    {
-                        Globals.recordServerLogs = Boolean.Parse (kv [1]);
-                    }
-                    catch
-                    {
-                        ServerOutput.WriteLine ("[!] Key RECORD_SERVER_LOGS in 3d-print-console.cfg is not a boolean.");
-                    }
-                    break;
-
-                default:
-
-                    ServerOutput.WriteLine ("[!] Unrecognised variable \"" + kv [0].ToUpperInvariant () + "\" in 3d-print-console.cfg.");
-                    break;
+                vars [kv [0].ToUpperInvariant ()] = kv [1];
+            }
+            else
+            {
+                ServerOutput.WriteLine ("[!] Unrecognised variable \"" + kv [0].ToUpperInvariant () + "\" in 3d-print-console.cfg.");
             }
         }
+    }
+
+    public static string GetString (string key)
+    {
+        return vars [key];
+    }
+
+    public static bool GetBool (string key)
+    {
+        return Boolean.Parse (vars [key]);
+    }
+
+    public static int GetInt (string key)
+    {
+        return int.Parse (vars [key]);
+    }
+
+    public static void Set (string key, object value)
+    {
+        vars [key] = value.ToString ();
     }
 }

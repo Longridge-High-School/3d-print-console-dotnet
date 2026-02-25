@@ -19,7 +19,7 @@ namespace PageLogic
 
         public void CheckPassword ()
         {
-            if (userPassword == Globals.password)
+            if (userPassword == Globals.GetString ("ADMIN_PASSWORD"))
             {
                 string token = Guid.NewGuid ().ToString ();
                 TimeSpan sixHours = new TimeSpan (6, 0, 0);

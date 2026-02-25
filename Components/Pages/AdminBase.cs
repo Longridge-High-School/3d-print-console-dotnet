@@ -79,7 +79,7 @@ namespace PageLogic
 
             try
             {
-                string[] content = File.ReadAllLines (Globals.logPath);
+                string[] content = File.ReadAllLines (Globals.GetString ("LOG_PATH"));
 
                 int logDisplayLength = 12 * printers.Count ();
 

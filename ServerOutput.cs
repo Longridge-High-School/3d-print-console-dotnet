@@ -7,10 +7,10 @@ public static class ServerOutput
             Console.WriteLine (message);
         }
 
-        if (Globals.recordServerLogs)
+        if (Globals.GetBool ("RECORD_SERVER_LOGS"))
         {
             message = DateTime.UtcNow.ToString () + " - " + message;
-            File.AppendAllText (Globals.logPath, "\n" + message);   
+            File.AppendAllText (Globals.GetString ("LOG_PATH"), "\n" + message);   
         }
     }
 }

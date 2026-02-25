@@ -23,21 +23,21 @@ try
     ServerOutput.WriteLine ("Settings loaded!");
     ServerOutput.WriteLine ("Starting 3D Print Console .NET...");
 
-    if (Globals.password == "")
+    if (Globals.GetString ("ADMIN_PASSWORD") == "")
     {
-        Globals.password = "admin";
+        Globals.Set ("ADMIN_PASSWORD", "admin");
         ServerOutput.WriteLine ("[!] Admin password not set! Defaulting to \"admin\" which is insecure!");
     }
 
-    if (!File.Exists (Globals.logPath))
+    if (!File.Exists (Globals.GetString ("LOG_PATH")))
     {
         try
         {
-            File.Create (Globals.logPath);   
+            File.Create (Globals.GetString ("LOG_PATH"));   
         }
         catch
         {
-            ServerOutput.WriteLine ("[!] Could not create a log file at " + Globals.logPath + "!");
+            ServerOutput.WriteLine ("[!] Could not create a log file at " + Globals.GetString ("LOG_PATH") + "!");
         }
     }
 
