@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "3D Print Console .NET"
-#define MyAppVersion "v0.0.3-alpha"
+#define MyAppVersion "v0.1.0-beta"
 #define MyAppPublisher "Longridge High School"
 #define MyAppURL "https://github.com/Longridge-High-School/3d-print-console-dotnet"
 #define MyAppExeName "3d-print-console-dotnet.exe"
@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName=C:\{#MyAppName}
+DefaultDirName=C:\LHS\{#MyAppName}
 ; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run
 ; on anything but x64 and Windows 11 on Arm.
 ArchitecturesAllowed=x64compatible
@@ -32,11 +32,12 @@ LicenseFile=C:\LHS\3d-print-console-dotnet\LICENSE.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputBaseFilename=3d-print-console-dotnet-win64
-SetupIconFile=C:\LHS\3d-print-console-dotnet\utilities\Installers\Windows\installer.ico
+SetupIconFile=C:\LHS\3d-print-console-dotnet\Installer\installer.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=classic
 OutputDir=.
+WizardImageFile=C:\LHS\3d-print-console-dotnet\Installer\wizard.bmp
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -51,7 +52,7 @@ Source: "C:\LHS\3d-print-console-dotnet\LICENSE.txt"; DestDir: "{app}"; Flags: i
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\3d-print-console-dotnet.styles.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\app.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\ascii.svg"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
-Source: "C:\LHS\3d-print-console-dotnet\utilities\Sample Config File\3d-print-console.cfg"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\LHS\3d-print-console-dotnet\Installer\3d-print-console.cfg"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\bootstrap\*"; DestDir: "{app}\wwwroot\bootstrap"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\runtimes\*"; DestDir: "{app}\runtimes"; Flags: ignoreversion recursesubdirs createallsubdirs
 

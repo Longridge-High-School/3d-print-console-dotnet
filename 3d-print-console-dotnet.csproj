@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>3d-print-console-dotnet</RootNamespace>
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
+    <ApplicationIcon>Installer/installer.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

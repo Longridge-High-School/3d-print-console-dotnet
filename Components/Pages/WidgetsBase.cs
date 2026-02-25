@@ -165,7 +165,7 @@ namespace PageLogic
 
                 ServerOutput.WriteLine ("Extracting archive...");
                 ZipFile.ExtractToDirectory (Path.GetTempPath () + input.File.Name, Path.Combine (widgetDirectory, input.File.Name.Substring (0, input.File.Name.Length - 4)));
-
+  
                 File.Delete (Path.GetTempPath () + input.File.Name);
                 ServerOutput.WriteLine ("Install Succesful!");
             }

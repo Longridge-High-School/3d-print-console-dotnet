@@ -8,4 +8,6 @@ wwwroot/js/
 wwwroot/console.html
 wwwroot/3dprintconsole.webmanifest
 /3d-print-console.cfg
-utilities/Installer/3d-print-console-dotnet-win64.exe
+/Installer/3d-print-console-dotnet-win64.exe
+3d-print-console-dotnet.zip
+content/
