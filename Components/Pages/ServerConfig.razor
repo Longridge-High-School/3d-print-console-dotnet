@@ -13,6 +13,7 @@
     @if (@config != "")
     {
         <textarea class = "ServerConfig" rows = "30" @bind = "config"></textarea>
+        <p>⚠️ You may have to restart the 3D Print Console for .NET server for changes to take effect.</p>
         <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
     }
     else

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting.WindowsServices;
 using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
+using Microsoft.AspNetCore.Components.Server;
 
 Console.WriteLine ("************************");
 Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
@@ -21,7 +22,7 @@ try
     }
 
     ServerOutput.WriteLine ("Settings loaded!");
-    ServerOutput.WriteLine ("Starting 3D Print Console .NET...");
+    ServerOutput.WriteLine ("Starting 3D Print Console for .NET...");
 
     if (Globals.GetString ("ADMIN_PASSWORD") == "")
     {
@@ -41,25 +42,36 @@ try
         }
     }
 
+    if (!Globals.GetBool ("USE_HTTP") && !Globals.GetBool ("USE_HTTPS"))
+    {
+        ServerOutput.WriteLine ("[!] ERROR: Variables \"USE_HTTP\" and \"USE_HTTPS\" are both set to false. Stopping...");
+        Environment.Exit (1);
+    }
+
     var builder = WebApplication.CreateBuilder (args);
 
-    /*#if !DEBUG
+    #if !DEBUG
 
         builder.WebHost.ConfigureKestrel ((context, serverOptions) =>
         {
-            serverOptions.Listen (IPAddress.Any, 5000);
-
-            serverOptions.Listen (IPAddress.Any, 5001, listenOptions =>
+            if (Globals.GetBool ("USE_HTTP"))
             {
-                listenOptions.UseHttps ("testCert.pfx", "testPassword");
-            });
+                serverOptions.Listen (IPAddress.Any, Globals.GetInt ("HTTP_PORT"));
+            }
+
+            if (Globals.GetBool ("USE_HTTPS"))
+            {
+                serverOptions.Listen (IPAddress.Any, Globals.GetInt ("HTTPS_PORT"), listenOptions =>
+                {
+                    listenOptions.UseHttps (Globals.GetString ("SSL_PATH"), Globals.GetString ("SSL_PASSWORD"));
+                });
+            }
         });
 
-    #endif*/
+    #endif
 
     // Add services to the container.
-    builder.Services.AddRazorComponents()
-        .AddInteractiveServerComponents();
+    builder.Services.AddRazorComponents ().AddInteractiveServerComponents ();
 
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
     {
@@ -69,6 +81,11 @@ try
     builder.Services.AddHttpContextAccessor ();
     builder.Services.AddSingleton <Cache> ();
     builder.WebHost.UseStaticWebAssets();
+
+    builder.Services.AddSignalR (options =>
+    {
+        options.ClientTimeoutInterval = TimeSpan.FromMinutes (30);
+    });
 
     if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows))
     {

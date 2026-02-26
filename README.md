@@ -1,9 +1,9 @@
-# 3D Print Console .NET
+# 3D Print Console for .NET
 
 **[3D Print Console](https://github.com/Longridge-High-School/3d-print-console) running on .NET**
 
 > [!CAUTION]
-> 3D Print Console .NET is still beta software, and not ready for production use!
+> 3D Print Console for .NET is still beta software, and not ready for production use!
 
 ## Features
 
