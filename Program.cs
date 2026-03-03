@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
 using Microsoft.AspNetCore.Components.Server;
 
-Console.WriteLine ("************************");
-Console.WriteLine ("* 3D PRINT CONSOLE.NET *");
-Console.WriteLine ("************************\n");
+Console.WriteLine ("*****************************");
+Console.WriteLine ("* 3D PRINT CONSOLE FOR .NET *");
+Console.WriteLine ("*****************************\n");
 Console.WriteLine ("Version: v0.1.0-beta");
 Console.WriteLine ("Copyright (C) Longridge High School 2026");
 Console.WriteLine ("Licensed under the M.I.T license.\n");

@@ -10,4 +10,4 @@ wwwroot/3dprintconsole.webmanifest
 /3d-print-console.cfg
 /Installer/3d-print-console-dotnet-win64.exe
 3d-print-console-dotnet.zip
-content/
+certs/

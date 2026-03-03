@@ -6,7 +6,7 @@ public static class Globals
         {"ADMIN_PASSWORD", ""},
         {"RECORD_SERVER_LOGS", "false"},
         {"HTTP_PORT", "5000"},
-        {"HTTPS_PORT", "50001"},
+        {"HTTPS_PORT", "5001"},
         {"USE_HTTP", "true"},
         {"USE_HTTPS", "false"},
         {"SSL_PATH", ""},
@@ -63,5 +63,20 @@ public static class Globals
     public static void Set (string key, object value)
     {
         vars [key] = value.ToString ();
+    }
+
+    public static void Write ()
+    {
+        ServerOutput.WriteLine ("Updating 3d-print-console.cfg...");
+        string config = "";
+
+        foreach (string key in vars.Keys)
+        {
+            config += key + "=" + vars [key] + "\n";
+        }
+        
+        File.WriteAllText ("3d-print-console.cfg", config);
+
+        ServerOutput.WriteLine ("Saved 3d-print-console.cfg.");
     }
 }

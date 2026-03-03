@@ -3,18 +3,111 @@
 @using PageLogic
 @inherits ServerConfigBase
 
-<PageTitle>Server Config Editor</PageTitle>
+<PageTitle>Server Settings</PageTitle>
 
-<h1>Server Config Editor</h1>
+<h1>Server Settings</h1>
 <hr />
 
 @if (loggedIn)
 {
-    @if (@config != "")
+    @if (File.Exists ("3d-print-console.cfg"))
     {
-        <textarea class = "ServerConfig" rows = "30" @bind = "config"></textarea>
-        <p>⚠️ You may have to restart the 3D Print Console for .NET server for changes to take effect.</p>
-        <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
+        <form>
+            <div class="mb-3">
+                <label for = "logPath" class = "form-label fw-bold">Log Path:</label>
+                <input type = "text" class = "form-control form-control-text" @bind = "@logPath" id = "logPath" aria-describedby = "logPathDescription">
+                <div id = "logPathDescription" class = "form-text">File to write logs to.</div>
+            </div>
+            <div class="mb-3">
+                <label for = "recordServerLog" class = "form-label fw-bold">Record Server Logs?</label>
+                <input type = "checkbox" class = "form-control form-check-input" id = "recordServerLogs" @bind = "recordServerLogs" aria-describedby = "recordServerLogsDescription">
+                <div id = "recordServerLogsDescription" class = "form-text">Should issues on the server be saved to the log file?</div>
+            </div>
+            <div class="mb-3">
+                <label for = "useHttp" class = "form-label fw-bold">Use HTTP?</label>
+                <input type = "checkbox" class = "form-control form-check-input" id = "useHttp" @bind = "useHTTP" aria-describedby = "useHttpDescription">
+                <div id = "useHttpLogsDescription" class = "form-text">Should this server listen for HTTP requests?</div>
+            </div>
+
+            @if (useHTTP)
+            {
+                <div class="mb-3">
+                    <label for = "httpPort" class = "form-label fw-bold">HTTP Port:</label>
+                    <input type = "number" class = "form-control form-number" id = "httpPort" @bind = "httpPort" aria-describedby = "httpPortDescription">
+                    <div id = "httpPortDescription" class = "form-text">Which port should this server listen for HTTP connections? The default HTTP port (recommended if the server only hosts 3D Print Console for .NET) is 80.</div>
+                </div>
+            }
+
+            <div class="mb-3">
+                <label for = "useHttps" class = "form-label fw-bold">Use HTTPS?</label>
+                <input type = "checkbox" class = "form-control form-check-input" id = "useHttps" @bind = "useHTTPS" aria-describedby = "useHttpsDescription">
+                <div id = "useHttpsLogsDescription" class = "form-text">Should this server listen for HTTPS requests?</div>
+            </div>
+
+            @if (useHTTPS)
+            {
+                <div class="mb-3">
+                    <label for = "httpsPort" class = "form-label fw-bold">HTTPS Port:</label>
+                    <input type = "number" class = "form-control form-number" id = "httpsPort" @bind = "httpsPort" aria-describedby = "httpsPortDescription">
+                    <div id = "httpsPortDescription" class = "form-text">Which port should this server listen for HTTPS connections? The default HTTPS port (recommended if the server only hosts 3D Print Console for .NET) is 443. <b>Make sure you configure your SSL certificates if you use HTTPS!</b></div>
+                </div>
+            }
+
+            <p>⚠️ You may need to restart the 3D Print Console for .NET server for changes to take effect.</p>
+
+            @if (useHTTP || useHTTPS)
+            {
+                <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
+            }
+            else
+            {
+                <button type = "button" class = "btn btn-success" disabled>Save</button>
+            }
+
+        </form>
+        <hr />
+
+        @if (Globals.GetBool ("USE_HTTPS"))
+        {
+            <h2>SSL Settings</h2>
+            <div class="mb-3">
+                <label for = "sslCert" class = "form-label fw-bold">Choose SSL Certificate:</label>
+                <br/>
+                <label for = "sslCert" class = "btn btn-primary">Upload .PFX</label>
+                <InputFile id = "sslCert" hidden accept = ".pfx" OnChange="UploadCert" aria-describedby = "sslCertDescription"/> <span>@certName</span>
+                <div id = "sslCertDescription" class = "form-text">Upload an SSL certificate in .PFX format to use for HTTPS connections.</div>
+            </div>
+            @if (certName == "None")
+            {
+                <div class="mb-3">
+                    <label for = "sslPassword" class = "form-label fw-bold">Password:</label>
+                    <input type = "password" class = "form-control form-control-text" disabled id = "sslPassword" aria-describedby = "sslPasswordDescription">
+                    <div id = "sslPasswordDescription" class = "form-text">Password for the SSL certificate above.</div>
+                </div>
+                <button type = "button" disabled class = "btn btn-success">Save</button>
+            }
+            else
+            {
+                <div class="mb-3">
+                    <label for = "sslPassword" class = "form-label fw-bold">Password:</label>
+                    <input type = "password" class = "form-control form-control-text" @bind = "@certPassword" id = "sslPassword" aria-describedby = "sslPasswordDescription">
+                    <div id = "sslPasswordDescription" class = "form-text">Password for the SSL certificate above.</div>
+                </div>
+                <button type = "button" class = "btn btn-success" @onclick = "@SaveCert">Save</button> 
+            }
+            <hr />
+        }
+
+        <h2>Change Admin Password</h2>
+        <div class="mb-3">
+            <label for = "adminPassword" class = "form-label fw-bold">Enter New Password:</label>
+            <div class = "input-group">
+                <input type = "password" class = "form-control form-control-text" id = "adminPassword" @bind = "adminPassword">
+                <div class = "input-group-append">
+                    <button class = "btn btn-danger" type = "button" @onclick = "ChangeAdminPassword">Change and Log Out</button>
+                </div>
+            </div>
+        </div>
     }
     else
     {

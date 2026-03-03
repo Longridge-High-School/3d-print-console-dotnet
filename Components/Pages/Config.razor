@@ -36,8 +36,8 @@
         </div>
         <div class="mb-3">
             <label for = "maxFileNameLength" class = "form-label fw-bold">Maximum File Name Length:</label>
-            <input type = "number" class = "form-control form-control-number" @bind = "@currentConfig.maxFileNameLength" id = "maxFileNameLength" aria-describedby = "maxFileNameLength">
-            <div id = "maxFileNameLength" class = "form-text">How long file names should be before they truncate.</div>
+            <input type = "number" class = "form-control form-control-number" @bind = "@currentConfig.maxFileNameLength" id = "maxFileNameLength" aria-describedby = "maxFileNameLengthDescription">
+            <div id = "maxFileNameLengthDescription" class = "form-text">How long file names should be before they truncate.</div>
         </div>
         <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
     </form>
