@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0
 
-EXPOSE 5000
+EXPOSE 5000 5001
 
 RUN mkdir /opt/3d-print-console-dotnet
 RUN mkdir /tmp/src

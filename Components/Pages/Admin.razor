@@ -51,7 +51,7 @@
                 <h4 class = "card-title">Recent Log Entries</h4>
             </div>
             <div class = "card-body">
-                <samp>@((MarkupString)log)</samp>
+                <p><samp>@((MarkupString)log)</samp></p>
                 <br />
                 <button type = "button" class = "btn btn-primary" @onclick = '() => nav.NavigateTo ("/admin/logviewer", true)'>See Full Log</button>
             </div>
