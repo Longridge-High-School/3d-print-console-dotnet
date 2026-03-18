@@ -55,6 +55,7 @@ try
         builder.Services.Configure  <ForwardedHeadersOptions> (options =>
         {
             options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            options.ForwardLimit = null; // We can have as many proxies as we want.
 
             foreach (string ip in Globals.GetString ("PROXY_IP").Split (","))
             {
