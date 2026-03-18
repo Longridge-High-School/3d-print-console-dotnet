@@ -55,7 +55,18 @@ try
         builder.Services.Configure  <ForwardedHeadersOptions> (options =>
         {
             options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-            options.KnownProxies.Add (IPAddress.Parse (Globals.GetString ("PROXY_IP")));
+
+            foreach (string ip in Globals.GetString ("PROXY_IP").Split (","))
+            {
+                try
+                {
+                    options.KnownProxies.Add (IPAddress.Parse (ip));
+                }
+                catch
+                {
+                    ServerOutput.WriteLine ("[!] Bad IP Address \"" + ip + "\" in \"PROXY_IP\"!");
+                }
+            }
         });
     }
 

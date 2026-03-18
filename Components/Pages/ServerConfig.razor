@@ -32,9 +32,9 @@
             @if (usingProxy)
             {
                 <div class="mb-3">
-                    <label for = "proxyAddress" class = "form-label fw-bold">Proxy IP Address:</label>
+                    <label for = "proxyAddress" class = "form-label fw-bold">Proxy IP Addresses:</label>
                     <input type = "text" class = "form-control form-control-text" @bind = "@proxyIP" id = "proxyAddress" aria-describedby = "proxyAddressDescription">
-                    <div id = "proxyAddressDescription" class = "form-text">What is the IPv4 address of the proxy that the server is behind?</div>
+                    <div id = "proxyAddressDescription" class = "form-text">What are the IPv4 address of the proxies that the server is behind? If you have more than 1 proxy, seperate them with commas.</div>
                 </div>            
             }
 
