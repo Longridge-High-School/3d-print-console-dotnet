@@ -9,6 +9,8 @@ namespace PageLogic
         public string adminPassword = "";
         public string logPath = Globals.GetString ("LOG_PATH");
         public bool recordServerLogs = Globals.GetBool ("RECORD_SERVER_LOGS");
+        public bool usingProxy = Globals.GetBool ("USING_PROXY");
+        public string proxyIP = Globals.GetString ("PROXY_IP");
         public int httpPort = Globals.GetInt ("HTTP_PORT");
         public int httpsPort = Globals.GetInt ("HTTPS_PORT");
         public bool useHTTP = Globals.GetBool ("USE_HTTP");
@@ -27,6 +29,8 @@ namespace PageLogic
         {
             Globals.Set ("LOG_PATH", logPath);
             Globals.Set ("RECORD_SERVER_LOGS", recordServerLogs);
+            Globals.Set ("USING_PROXY", usingProxy);
+            Globals.Set ("PROXY_IP", proxyIP);
             Globals.Set ("HTTP_PORT", httpPort);
             Globals.Set ("HTTPS_PORT", httpsPort);
             Globals.Set ("USE_HTTP", useHTTP);

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "3D Print Console for .NET"
-#define MyAppVersion "v0.1.1-beta"
+#define MyAppVersion "v0.2.0-beta"
 #define MyAppPublisher "Longridge High School"
 #define MyAppURL "https://github.com/Longridge-High-School/3d-print-console-dotnet"
 #define MyAppExeName "3d-print-console-dotnet.exe"
@@ -49,7 +49,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\3d-print-console-dotnet.styles.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\app.css"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\bin\Release\net8.0\publish\wwwroot\ascii.svg"; DestDir: "{app}\wwwroot"; Flags: ignoreversion
 Source: "C:\LHS\3d-print-console-dotnet\Installer\3d-print-console.cfg"; DestDir: "{app}"; Flags: ignoreversion

@@ -24,6 +24,21 @@
                 <div id = "recordServerLogsDescription" class = "form-text">Should issues on the server be saved to the log file?</div>
             </div>
             <div class="mb-3">
+                <label for = "usingProxy" class = "form-label fw-bold">Using Proxy?</label>
+                <input type = "checkbox" class = "form-control form-check-input" id = "usingProxy" @bind = "usingProxy" aria-describedby = "usingProxyDescription">
+                <div id = "usingProxyDescription" class = "form-text">Is the server behind a proxy? Setting this incorrectly can cause all log entries to appear to have come from the proxy.</div>
+            </div>
+
+            @if (usingProxy)
+            {
+                <div class="mb-3">
+                    <label for = "proxyAddress" class = "form-label fw-bold">Proxy IP Address:</label>
+                    <input type = "text" class = "form-control form-control-text" @bind = "@proxyIP" id = "proxyAddress" aria-describedby = "proxyAddressDescription">
+                    <div id = "proxyAddressDescription" class = "form-text">What is the IPv4 address of the proxy that the server is behind?</div>
+                </div>            
+            }
+
+            <div class="mb-3">
                 <label for = "useHttp" class = "form-label fw-bold">Use HTTP?</label>
                 <input type = "checkbox" class = "form-control form-check-input" id = "useHttp" @bind = "useHTTP" aria-describedby = "useHttpDescription">
                 <div id = "useHttpLogsDescription" class = "form-text">Should this server listen for HTTP requests?</div>

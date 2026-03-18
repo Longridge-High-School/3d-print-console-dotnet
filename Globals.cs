@@ -5,6 +5,8 @@ public static class Globals
         {"LOG_PATH", "log.txt"},
         {"ADMIN_PASSWORD", ""},
         {"RECORD_SERVER_LOGS", "false"},
+        {"USING_PROXY", "false"},
+        {"PROXY_IP", "127.0.0.1"},
         {"HTTP_PORT", "5000"},
         {"HTTPS_PORT", "5001"},
         {"USE_HTTP", "true"},

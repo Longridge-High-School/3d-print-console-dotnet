@@ -9,7 +9,7 @@ public static class ServerOutput
 
         if (Globals.GetBool ("RECORD_SERVER_LOGS"))
         {
-            message = DateTime.UtcNow.ToString () + " - " + message;
+            message = DateTime.UtcNow.ToString ("yyyy/MM/dd HH:mm:ss") + " - " + message;
             File.AppendAllText (Globals.GetString ("LOG_PATH"), "\n" + message);   
         }
     }

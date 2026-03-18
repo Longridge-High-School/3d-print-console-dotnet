@@ -2,8 +2,9 @@ services:
   console:
     build: .
     ports:
-      - "8001:8080"
+      - "5000:5000"
     environment:
       - RECORD_SERVER_LOGS=false
+      - USING_PROXY=false
       - ADMIN_PASSWORD=admin
     restart: unless-stopped

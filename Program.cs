@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.Server;
 Console.WriteLine ("*****************************");
 Console.WriteLine ("* 3D PRINT CONSOLE FOR .NET *");
 Console.WriteLine ("*****************************\n");
-Console.WriteLine ("Version: v0.1.1-beta");
+Console.WriteLine ("Version: v0.2.0-beta");
 Console.WriteLine ("Copyright (C) Longridge High School 2026");
 Console.WriteLine ("Licensed under the M.I.T license.\n");
 
@@ -50,6 +50,15 @@ try
 
     var builder = WebApplication.CreateBuilder (args);
 
+    if (Globals.GetBool ("USING_PROXY"))
+    {
+        builder.Services.Configure  <ForwardedHeadersOptions> (options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            options.KnownProxies.Add (IPAddress.Parse (Globals.GetString ("PROXY_IP")));
+        });
+    }
+
     #if !DEBUG
 
         builder.WebHost.ConfigureKestrel ((context, serverOptions) =>
@@ -73,14 +82,10 @@ try
     // Add services to the container.
     builder.Services.AddRazorComponents ().AddInteractiveServerComponents ();
 
-    builder.Services.Configure<ForwardedHeadersOptions>(options =>
-    {
-        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-    });
 
     builder.Services.AddHttpContextAccessor ();
     builder.Services.AddSingleton <Cache> ();
-    builder.WebHost.UseStaticWebAssets();
+    builder.WebHost.UseStaticWebAssets ();
 
     builder.Services.AddSignalR (options =>
     {
