@@ -1,6 +1,6 @@
 # 3D Print Console for .NET
 
-**[3D Print Console](https://github.com/Longridge-High-School/3d-print-console) running on .NET**
+**[3D Print Console](https://github.com/Longridge-High-School/3d-print-console) running on ASP.NET**
 
 > [!CAUTION]
 > 3D Print Console for .NET is still beta software, and not ready for production use!
@@ -13,6 +13,19 @@
 - Integrated log viewer.
 - Runs on Windows and Docker.
 
-## Getting Started
+<!--## Getting Started
 
-TODO
+### Windows
+
+1. Log into your server.
+2. Download and install [.NET Runtime 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
+3. Download and run the 3D Print Console for .NET installer.
+4. Restart your server.
+5. In a browser, connect to your server on port 5000.
+6. See the "Initial Setup" section.
+
+### Docker
+
+
+### Initial Setup-->
+

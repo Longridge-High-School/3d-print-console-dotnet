@@ -1,8 +1,16 @@
 public static class Globals
 {
+    #if DEBUG
+        private static string filePath = System.IO.Path.Combine (System.IO.Directory.GetCurrentDirectory (), "3d-print-console.cfg");
+        private static string defaultLogPath = System.IO.Path.Combine (System.IO.Directory.GetCurrentDirectory (), "log.txt");
+    #else
+        private static string filePath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "3d-print-console.cfg");
+        private static string defaultLogPath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+    #endif
+
     private static Dictionary<string, string> vars = new Dictionary<string, string>
     {
-        {"LOG_PATH", "log.txt"},
+        {"LOG_PATH", defaultLogPath},
         {"ADMIN_PASSWORD", ""},
         {"RECORD_SERVER_LOGS", "false"},
         {"USING_PROXY", "false"},
@@ -14,7 +22,7 @@ public static class Globals
         {"SSL_PATH", ""},
         {"SSL_PASSWORD", ""}
     };
-    
+
     public static void LoadFromEnvironment ()
     {
         foreach (string key in vars.Keys)
@@ -30,7 +38,7 @@ public static class Globals
 
     public static void LoadFromFile ()
     {
-        string[] lines = File.ReadAllLines ("3d-print-console.cfg");
+        string[] lines = File.ReadAllLines (filePath);
 
         foreach (string line in lines)
         {
@@ -77,7 +85,7 @@ public static class Globals
             config += key + "=" + vars [key] + "\n";
         }
         
-        File.WriteAllText ("3d-print-console.cfg", config);
+        File.WriteAllText (filePath, config);
 
         ServerOutput.WriteLine ("Saved 3d-print-console.cfg.");
     }

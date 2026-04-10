@@ -10,7 +10,7 @@
 
 @if (loggedIn)
 {
-    @if (File.Exists ("3d-print-console.cfg"))
+    @if (File.Exists (configPath))
     {
         <form>
             <div class="mb-3">

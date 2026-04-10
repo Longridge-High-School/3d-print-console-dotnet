@@ -20,6 +20,12 @@ namespace PageLogic
         public byte [] cert = [];
         public string certPassword = "";
 
+        #if DEBUG
+            public static string configPath = System.IO.Path.Combine (System.IO.Directory.GetCurrentDirectory (), "3d-print-console.cfg");
+        #else
+            public static string configPath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "3d-print-console.cfg");   
+        #endif
+
         protected override async Task OnInitializedAsync ()
         {
             await Task.Run (CheckAuthCookie);
