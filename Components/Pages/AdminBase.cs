@@ -3,7 +3,7 @@ using System.Net;
 using System.IO.Compression;
 using Microsoft.VisualBasic.FileIO;
 using System.Runtime.InteropServices;
-
+using System.Text.RegularExpressions;
 
 namespace PageLogic
 {    
@@ -15,15 +15,19 @@ namespace PageLogic
         public List<PrinterObject> printers;
         public List<CameraObject> cameras;
         public Dictionary<string, bool> transparencies = new Dictionary<string, bool> ();
+        public string latestVersion = "";
+        public string baseDirectory = "";
 
         public AdminBase ()
         {         
             #if DEBUG
                 printerFilePath = System.IO.Path.Combine (System.IO.Directory.GetCurrentDirectory (), "wwwroot", "data", "printers.json");
                 cameraFilePath = System.IO.Path.Combine (System.IO.Directory.GetCurrentDirectory (), "wwwroot", "data", "cameras.json");
+                baseDirectory = System.IO.Directory.GetCurrentDirectory ();
             #else
                 printerFilePath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "wwwroot", "data", "printers.json");   
                 cameraFilePath = System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "wwwroot", "data", "cameras.json");   
+                baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             #endif
 
             try
@@ -113,6 +117,11 @@ namespace PageLogic
         protected override async Task OnInitializedAsync ()
         {
             await Task.Run (CheckAuthCookie);
+            
+            if (loggedIn)
+            {
+                GetLatestVersion ();
+            }
         }
 
         public void SavePrinters ()
@@ -204,6 +213,40 @@ namespace PageLogic
             }
 
             nav.NavigateTo (nav.Uri, true);
+        }
+
+        public async void GetLatestVersion ()
+        {
+            HttpClient client = new HttpClient ();
+
+            try
+            {
+                HttpRequestMessage message = new HttpRequestMessage (HttpMethod.Get, "https://api.github.com/repos/Longridge-High-School/3d-print-console-dotnet/tags");
+                message.Headers.Add ("User-Agent", "3D Print Console for .NET");
+                HttpResponseMessage response = await client.SendAsync (message);
+                string result = await response.Content.ReadAsStringAsync ();
+                latestVersion = Regex.Match (result, @"v.*?(?="",)").Value;
+            }
+            catch
+            {
+                latestVersion = "";
+            }
+
+            client.Dispose ();
+
+            if (latestVersion == "")
+            {
+                ServerOutput.WriteLine ("[!] Could not get number of latest version from GitHub! You may have exceeded the GitHub API rate limit.");
+                return;
+            }
+
+            StateHasChanged ();
+        }
+
+        public string GetUptime ()
+        {
+            TimeSpan uptime = TimeSpan.FromMilliseconds (Environment.TickCount64);
+            return uptime.Days.ToString () + " days " + uptime.Hours.ToString () + " hours " + uptime.Minutes.ToString () + " minutes " + uptime.Seconds.ToString () + " seconds";
         }
     }
 }

@@ -23,6 +23,8 @@ public static class Globals
         {"SSL_PASSWORD", ""}
     };
 
+    public static string version = "v1.0.0";
+
     public static void LoadFromEnvironment ()
     {
         foreach (string key in vars.Keys)

@@ -72,13 +72,43 @@
         </div>
     </div>
     <br/>
-    <div class = "card">
-        <div class = "card-header">
-            <h4 class = "card-title">Update 3D Print Console</h4>
+    <div class = "card-group">
+        <div class = "card">
+            <div class = "card-header">
+                <h4 class = "card-title">Update 3D Print Console</h4>
+            </div>
+            <div class = "card-body">
+                <p><b>This will not update 3D Print Console for .NET, but will update the version of 3D Print Console that users see.</b></p>
+                <button type = "button" class = "btn btn-warning" @onclick = 'UpdateConsole'>Get Latest 3D Print Console</button>
+                <br/>
+                <a class = "btn btn-light mt-2" href = "https://github.com/Longridge-High-School/3d-print-console" target = "_blank">View GitHub Repository</a>
+            </div>
         </div>
-        <div class = "card-body">
-            <p><b>This will not update 3D Print Console for .NET, but will update the version of 3D Print Console that users see.</b></p>
-            <button type = "button" class = "btn btn-warning" @onclick = 'UpdateConsole'>Get Latest 3D Print Console</button>
+        <div class = "card">
+            <div class = "card-header">
+                <h4 class = "card-title">Server Information</h4>
+            </div>
+            <div class = "card-body">
+                <p><b>Current Version:</b> @Globals.version</p>
+                <p>
+                    <b>Latest Version:</b>
+                    @if (latestVersion == "")
+                    {
+                        <span>&nbsp;⚠️ Could not get number of latest version from GitHub!</span>
+                    }
+                    else if (latestVersion == Globals.version)
+                    {
+                        <span class = "text-success">&nbsp;@latestVersion</span>
+                    }
+                    else
+                    {
+                        <span class = "text-danger">&nbsp;@latestVersion <br /><b>You are not running the latest version of 3D Print Console for .NET!</b></span>
+                    }
+                </p>
+                <p><b>Operating System:</b> @System.Runtime.InteropServices.RuntimeInformation.OSDescription</p>
+                <p><b>System Uptime:</b> @GetUptime() at last page refresh.</p>
+                <p><b>Base Directory:</b> <samp>@baseDirectory</samp></p>
+            </div>
         </div>
     </div>
 }
