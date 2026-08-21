@@ -1,4 +1,5 @@
 ﻿@page "/admin"
+@using Microsoft.AspNetCore.Components.Authorization
 @using PageLogic
 @inherits AdminBase
 
@@ -23,17 +24,43 @@
                         </svg>
                     </h5>
                     <form>
-                        <div class="mb-3">
-                            <label for = "filament" class = "form-label fw-bold">Filament Colour:</label>
-                            <input type = "color" class = "form-control form-control-color" id = "filament" @bind = "@printer.filament" aria-describedby = "filamentDescription">
-                            <div id = "filamentDescription" class = "form-text">The colour of the filament.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for = "transparency" class = "form-label fw-bold">Transparent?</label>
-                            <input type = "checkbox" class = "form-control form-check-input" @bind = "@transparencies[printer.id]" id = "transparency" aria-describedby = "transparencyDescription">
-                            <div id = "transparencyDescription" class = "form-text">Is the filament transparent?</div>
-                        </div>
-                        <div class="mb-3">
+
+                        @if (printer.filaments != null)
+                        {
+                            <div class = "mb-3">
+                                <label class = "form-label fw-bold">Filament Colours:</label>
+                                <br/>
+                                <svg width = "50" height = "50" xmlns = "http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id = "gradient" x1 = "0%" x2 = "100%" y1 = "0%" y2 = "0%">
+
+                                            @for (int i = 0; i < printer.filaments.Length; i++)
+                                            {
+                                                <stop offset = "@(i * (100.0f / printer.filaments.Length))%" stop-color = "@printer.filaments[i]" />
+                                            }
+
+                                        </linearGradient>>
+                                    </defs>
+                                    <rect x = "2" y = "2" rx = "2" ry = "2" width = "48" height = "40" stroke = "#ced4da" stroke-width = "0.5" fill = "white" />
+                                    <rect x = "10" y = "10" rx = "2" ry = "2" width = "32" height = "24" stroke = "black" stroke-width = "0.5" fill = "url(#gradient)" />
+                                </svg>
+                                <div class = "form-text">❗This printer is set to use multiple colours. You can change this using <b>Advanced Colour Settings</b> in the <b>Printers</b> menu.</div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class = "mb-3">
+                                <label for = "filament" class = "form-label fw-bold">Filament Colour:</label>
+                                <input type = "color" class = "form-control form-control-color" id = "filament" @bind = "@printer.filament" aria-describedby = "filamentDescription">
+                                <div id = "filamentDescription" class = "form-text">The colour of the filament.</div>
+                            </div>
+                            <div class = "mb-3">
+                                <label for = "transparency" class = "form-label fw-bold">Transparent?</label>
+                                <input type = "checkbox" class = "form-control form-check-input" @bind = "@transparencies[printer.id]" id = "transparency" aria-describedby = "transparencyDescription">
+                                <div id = "transparencyDescription" class = "form-text">Is the filament transparent?</div>
+                            </div>
+                        }
+                        <div class = "mb-3">
                             <label for = "locked" class = "form-label fw-bold">Locked?</label>
                             <input type = "checkbox" class = "form-control form-check-input" id = "locked" @bind = "printer.locked" aria-describedby = "lockedDescription">
                             <div id = "lockedDescription" class = "form-text">Printers can be locked to stop users sending jobs to them via 3D Print Console. This does not affect OctoPrint or the actual printer itself.</div>

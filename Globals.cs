@@ -23,7 +23,7 @@ public static class Globals
         {"SSL_PASSWORD", ""}
     };
 
-    public static string version = "v1.0.0";
+    public static string version = "v1.1.0";
 
     public static void LoadFromEnvironment ()
     {

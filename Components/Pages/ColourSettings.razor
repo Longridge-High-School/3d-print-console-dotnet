@@ -1,0 +1,103 @@
+@page "/admin/printers/colour/{id:int}"
+@using PageLogic
+@using _3d_print_console_dotnet.Components.Layout
+@layout PopupLayout
+@inherits ColourSettingsBase
+
+@if (loggedIn)
+{
+    <div class = "card-header">
+        <h1 class = "card-title">🎨 @((MarkupString) printers [id].name) - Advanced Colour Settings</h1>
+    </div>
+    <div class = "card-body">
+        <form>
+            <div class = "mb-3">
+                <label for = "ColourMode" class = "form-label fw-bold">Colour Mode:</label>
+                <select class =" form-select" id = "ColourMode" @bind = "dropdownValue" @bind:after = "UpdateColourMode">
+
+                    @if (colourMode == "multi")
+                    {
+                        <option value = "single">Single Colour</option>
+                        <option value = "multi" selected>Multicolour</option>
+                    }
+                    else
+                    {
+                        <option value = "single" selected>Single Colour</option>
+                        <option value = "multi">Multicolour</option>
+                    }
+
+                </select>
+                <div id = "ColourModeDescription" class = "form-text">Use multicolour mode if you are using a multicoloured filament
+                (like <a href = "https://longridge-high-school.github.io/3d-print-console/img/dotnet/samples/sample_benchy_multi.webp" target = "_blank">this</a>), or your
+                printer has a multi-material set up. Otherwise, use single colour mode.</div>
+            </div>
+            <hr/>
+
+            @if (colourMode == "multi")
+            {
+                <div class = "mb-3">
+                    <label class = "form-label fw-bold">Preview:</label>
+                    <br/>
+                    <svg width = "50" height = "50" xmlns = "http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id = "gradient" x1 = "0%" x2 = "100%" y1 = "0%" y2 = "0%">
+
+                                @for (int i = 0; i < colours.Count; i++)
+                                {
+                                    <stop offset = "@(i * (100.0f / colours.Count))%" stop-color = "@colours[i]" />
+                                }
+
+                            </linearGradient>>
+                        </defs>
+                        <rect x = "2" y = "2" rx = "2" ry = "2" width = "48" height = "40" stroke = "#ced4da" stroke-width = "0.5" fill = "white" />
+                        <rect x = "10" y = "10" rx = "2" ry = "2" width = "32" height = "24" stroke = "black" stroke-width = "0.5" fill = "url(#gradient)" />
+                    </svg>
+                </div>
+                <label class = "form-label fw-bold">Select Colours:</label>
+                <div class = "mb-3">
+
+                    @for (int i = 0; i < colours.Count; i++)
+                    {
+                        int currentIndex = i;
+
+                        <div class = "input-group mb-2 w-75">
+                            <svg width = "30" height = "30" xmlns = "http://www.w3.org/2000/svg">
+                                <circle cx = "15" cy = "15" r = "10" stroke = "black" stroke-width = "2" fill = "@colours[i]" />
+                            </svg>
+                            &nbsp;
+                            <input type = "text" class = "form-control form-control-text rounded-start" value = "@colours[i]" @onchange = "@(e => UpdateColour (currentIndex, e.Value.ToString ()))"/>
+
+                            @if (i > 0)
+                            {
+                                <div class = "input-group-append">
+                                    <button type = "button" class = "btn btn-outline-danger" @onclick = "@(e => RemoveColour (currentIndex))">❌</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class = "input-group-append">
+                                    <button type = "button" class = "btn btn-outline-danger" disabled>❌</button>
+                                </div>
+                            }
+                        
+                        </div>
+                    }
+
+                </div>
+                <button type = "button" class = "btn btn-primary" @onclick = "AddColour">Add Colour</button>
+                <hr />
+            }
+
+        </form>
+        <button type = "button" class = "btn btn-success" @onclick = "Save">Save</button>
+    </div>
+}
+else
+{
+    <div class = "card-header">
+        <h1>❗ Error!</h1>
+    </div>
+    <div class = "card-body">
+        <p>Please log in to view this content.</p>
+    </div>
+}

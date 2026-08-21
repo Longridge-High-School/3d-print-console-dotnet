@@ -11,23 +11,28 @@
     {
         @foreach (PrinterObject printer in printers)
         {
+            @if (printer.material == null)
+            {
+                printer.material = "PLA";
+            }
+
             <div class = "card">
                 <div class = "card-header">
                     <h4 class = "card-title" id = "@printer.id">@printer.name</h4>
                 </div>
                 <div class = "card-body">
                     <form>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "id" class = "form-label fw-bold">ID:</label>
                             <p id = "id">@printer.id</p>
                             <div id = "idDescription" class = "form-text">The internal ID of this printer.</div>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "name" class = "form-label fw-bold">Printer Name:</label>
                             <input type = "text" class = "form-control form-control-text" id = "name" @bind = "printer.name" aria-describedby = "nameDescription">
                             <div id = "nameDescription" class = "form-text">Name of this printer.</div>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "host" class = "form-label fw-bold">URL:</label>
                             <div class = "input-group">
                                 <input type = "text" class = "form-control form-control-text" id = "host" @bind = "printer.host" aria-describedby = "hostDescription">
@@ -37,7 +42,7 @@
                             </div>
                             <div id = "hostDescription" class = "form-text">OctoPrint URL of this printer. This must be accessible from all your clients.</div>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "managementURL" class = "form-label fw-bold">Mangement URL (optional):</label>
                             <div class = "input-group">
                                 <input type = "text" class = "form-control form-control-text" id = "managementURL" @bind = "printer.managementURL" aria-describedby = "managementURLDescription">
@@ -54,37 +59,89 @@
                             </div>
                             <div id = "managementURLDescription" class = "form-text">URL where you can access this printer to manage it individually. Normally, this is the same as "URL", and will default to that if left blank.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for = "filament" class = "form-label fw-bold">Filament Colour:</label>
-                            <input type = "color" class = "form-control form-control-color" id = "filament" @bind = "@printer.filament" aria-describedby = "filamentDescription">
-                            <div id = "filamentDescription" class = "form-text">The colour of the filament.</div>
+                        <div class = "mb-3">
+                            <label for = "material" class = "form-label fw-bold">Material:</label>
+                            <input type = "text" class = "form-control form-control-text" id = "material" @bind = "printer.material" aria-describedby = "materialDescription">
+                            <div id = "materialDescription" class = "form-text">Material currently in this printer. The following materials support an information button
+                                on the console, but you can type any material that your printer will print.<br/>
+                                <ul>
+                                    <li>PLA</li>
+                                    <li>PETG</li>
+                                    <li>ABS</li>
+                                    <li>ASA</li>
+                                    <li>TPU</li>
+                                    <li>Nylon</li>
+                                    <li>HIPS</li>
+                                    <li>Polycarbonate (PC)</li>
+                                    <li>Polypropylene</li>
+                                    <li>PVA</li>
+                                    <li>Metal PLA</li>
+                                    <li>Wood PLA</li>
+                                    <li>Carbon Fibre (CF or Carbon Fiber)</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for = "transparency" class = "form-label fw-bold">Transparent?</label>
-                            <input type = "checkbox" class = "form-control form-check-input" @bind = "@transparencies[printer.id]" id = "transparency" aria-describedby = "transparencyDescription">
-                            <div id = "transparencyDescription" class = "form-text">Is the filament transparent?</div>
+
+                        @if (printer.filaments == null || printer.filaments.Length == 0)
+                        {
+                            <div class = "mb-3">
+                                <label for = "filament" class = "form-label fw-bold">Filament Colour:</label>
+                                <input type = "color" class = "form-control form-control-color" id = "filament" @bind = "@printer.filament" aria-describedby = "filamentDescription">
+                                <div id = "filamentDescription" class = "form-text">The colour of the filament.</div>
+                            </div>
+                            <div class = "mb-3">
+                                <label for = "transparency" class = "form-label fw-bold">Transparent?</label>
+                                <input type = "checkbox" class = "form-control form-check-input" @bind = "@transparencies[printer.id]" id = "transparency" aria-describedby = "transparencyDescription">
+                                <div id = "transparencyDescription" class = "form-text">Is the filament transparent?</div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class = "mb-3">
+                                <label class = "form-label fw-bold">Filament Colours:</label>
+                                <br/>
+                                <svg width = "50" height = "50" xmlns = "http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id = "gradient" x1 = "0%" x2 = "100%" y1 = "0%" y2 = "0%">
+
+                                            @for (int i = 0; i < printer.filaments.Length; i++)
+                                            {
+                                                <stop offset = "@(i * (100.0f / printer.filaments.Length))%" stop-color = "@printer.filaments[i]" />
+                                            }
+
+                                        </linearGradient>>
+                                    </defs>
+                                    <rect x = "2" y = "2" rx = "2" ry = "2" width = "48" height = "40" stroke = "#ced4da" stroke-width = "0.5" fill = "white" />
+                                    <rect x = "10" y = "10" rx = "2" ry = "2" width = "32" height = "24" stroke = "black" stroke-width = "0.5" fill = "url(#gradient)" />
+                                </svg>
+                                <div class = "form-text">❗This printer is set to use multiple colours. You can change this using <b>Advanced Colour Settings</b>.</div>
+                            </div>
+                        }
+
+                        <div class = "mb-3">
+                            <button type = "button" @onclick = "@(e => OpenPopup ($"/admin/printers/colour/{@printer.id}"))" class = "btn btn-primary">🎨 Advanced Colour Settings</button>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "key" class = "form-label fw-bold">API Key:</label>
                             <input type = "text" class = "form-control form-control-text" id = "key" @bind = "printer.key" aria-describedby = "keyDescription">
                             <div id = "keyDescription" class = "form-text">OctoPrint API key for this printer.</div>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "background" class = "form-label fw-bold">Background Colour:</label>
                             <input type = "color" class = "form-control form-control-color" id = "background" @bind = "@printer.background" aria-describedby = "backgroundDescription">
                             <div id = "backgroundDescription" class = "form-text">The colour used for this printer in 3D Print Console.</div>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "port" class = "form-label fw-bold">Port:</label>
                             <input type = "text" class = "form-control form-control-text" id = "port" @bind = "printer.port" aria-describedby = "portDescription">
                             <div id = "portDescription" class = "form-text">Serial port this printer is connected to. This may be something like "/dev/usb0" on Linux, "COM3" on Windows, or "/tmp/printer" if using OctoKlipper.</div>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "file" class = "form-label fw-bold">File Extension:</label>
                             <input type = "text" class = "form-control form-control-text" id = "file" @bind = "printer.file" aria-describedby = "fileDescription">
                             <div id = "fileDescription" class = "form-text">File extension for the GCODE files used by this printer. Remember to include the dot!</div>
                         </div>
-                        <div class="mb-3">
+                        <div class = "mb-3">
                             <label for = "locked" class = "form-label fw-bold">Locked?</label>
                             <input type = "checkbox" class = "form-control form-check-input" id = "locked" @bind = "printer.locked" aria-describedby = "lockedDescription">
                             <div id = "lockedDescription" class = "form-text">Printers can be locked to stop users sending jobs to them via 3D Print Console. This does not affect OctoPrint or the actual printer itself.</div>

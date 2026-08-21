@@ -5,6 +5,8 @@ public class PrinterObject
     public string? host {get; set;}
     public string? managementURL {get; set;}
     public string? filament {get; set;}
+    public string []? filaments {get; set;}
+    public string? material {get; set;}
     public string? key {get; set;}
     public string? background {get; set;}
     public string? port {get; set;}

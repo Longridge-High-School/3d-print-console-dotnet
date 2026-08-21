@@ -84,7 +84,7 @@
         {
             position: sticky;
             top: 0;
-            z-index: 1;
+            z-index: 99;
         }
 
         .top-row.auth ::deep a:first-child
@@ -157,6 +157,26 @@
             {
                 return allCookies [i].slice (13);
             }
+        }
+    }
+
+</script>
+<script type = "text/JavaScript">
+
+    function Popup (url, refreshOnClose)
+    {
+        let popup = window.open (url, '_blank', 'toolbar=0,location=0,menubar=0');
+        
+        if (refreshOnClose)
+        {
+            const timer = setInterval (() =>
+            {
+                if (popup.closed)
+                {
+                    clearInterval (timer);
+                    location.reload ();
+                }
+            }, 500);
         }
     }
 

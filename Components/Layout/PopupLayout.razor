@@ -1,0 +1,41 @@
+@inherits LayoutComponentBase
+
+<style>
+
+    .card
+    {
+        width: 95%;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        min-height: calc(100vh - 1em);
+    }
+
+</style>
+
+<div class = "card">
+    @Body
+</div>
+
+<script type = "text/JavaScript">
+
+    function GetCookie ()
+    {
+        if (document.cookie.length == 0)
+        {
+            return "";
+        }
+
+        var allCookies = document.cookie.split (";");
+
+        for (var i = 0; i < allCookies.length; i++)
+        {
+            if (allCookies [i].startsWith ("access_token="))
+            {
+                return allCookies [i].slice (13);
+            }
+        }
+    }
+
+</script>
