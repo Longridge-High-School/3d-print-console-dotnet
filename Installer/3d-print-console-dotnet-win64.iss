@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "3D Print Console for .NET"
-#define MyAppVersion "v1.1.0"
+#define MyAppVersion "v1.1.1"
 #define MyAppPublisher "Longridge High School"
 #define MyAppURL "https://github.com/Longridge-High-School/3d-print-console-dotnet"
 #define MyAppExeName "3d-print-console-dotnet.exe"

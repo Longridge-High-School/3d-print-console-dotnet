@@ -3,6 +3,10 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0
 EXPOSE 5000 5001
 
 RUN mkdir /opt/3d-print-console-dotnet
+WORKDIR /tmp
+RUN curl -k -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+RUN chmod +x ./dotnet-install.sh
+RUN /tmp/dotnet-install.sh --runtime aspnetcore --channel 8.0 --install-dir /usr/bin/dotnet8
 RUN mkdir /tmp/src
 WORKDIR /tmp/src
 ADD . /tmp/src
@@ -19,4 +23,4 @@ WORKDIR /opt/3d-print-console-dotnet
 RUN touch ./log.txt
 RUN rm -rf /tmp/src
 
-CMD ["dotnet", "/opt/3d-print-console-dotnet/3d-print-console-dotnet.dll"]
+CMD ["/usr/bin/dotnet8/dotnet", "/opt/3d-print-console-dotnet/3d-print-console-dotnet.dll"]
